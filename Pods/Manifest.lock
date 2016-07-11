@@ -1,0 +1,145 @@
+PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - AVOSCloud (3.1.6.2)
+  - ContextMenu.iOS (1.1.0)
+  - DACircularProgress (2.3.1)
+  - DateTools (1.5.0)
+  - DOUAudioStreamer (0.2.15)
+  - FastttCamera (0.3.4):
+    - FastttCamera/Default (= 0.3.4)
+  - FastttCamera/Default (0.3.4)
+  - FastttCamera/Filters (0.3.4):
+    - FastttCamera/Default
+    - GPUImage (~> 0.1.0)
+  - FXBlurView (1.6.4)
+  - FXForms (1.2.13)
+  - GPUImage (0.1.7)
+  - IDMPhotoBrowser (1.8.4):
+    - DACircularProgress
+    - pop
+    - SDWebImage
+  - JVFloatLabeledTextField (1.1.0)
+  - Masonry (1.0.0)
+  - MBProgressHUD (0.9.1)
+  - MJRefresh (3.1.0)
+  - NAKPlaybackIndicatorView (0.0.3)
+  - NJKWebViewProgress (0.2.3):
+    - NJKWebViewProgress/Core (= 0.2.3)
+    - NJKWebViewProgress/ProgressView (= 0.2.3)
+  - NJKWebViewProgress/Core (0.2.3)
+  - NJKWebViewProgress/ProgressView (0.2.3)
+  - PlayerKit (1.0.0)
+  - pop (1.0.9)
+  - PPSSignatureView (0.1.2)
+  - Realm (0.98.6):
+    - Realm/Headers (= 0.98.6)
+  - Realm/Headers (0.98.6)
+  - RealReachability (1.1.7):
+    - RealReachability/Connection (= 1.1.7)
+    - RealReachability/Ping (= 1.1.7)
+  - RealReachability/Connection (1.1.7)
+  - RealReachability/Ping (1.1.7)
+  - SDCycleScrollView (1.63):
+    - SDWebImage (~> 3.7)
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
+  - SSKeychain (1.4.0)
+  - TGCameraViewController (2.2.2)
+  - TTTAttributedLabel (1.13.4)
+  - YYCache (1.0.3)
+  - YYImage (1.0.1):
+    - YYImage/Core (= 1.0.1)
+  - YYImage/Core (1.0.1)
+  - YYWebImage (1.0.3):
+    - YYCache
+    - YYImage
+  - ZipArchive (1.4.0)
+
+DEPENDENCIES:
+  - AFNetworking (~> 3.0)
+  - AVOSCloud (= 3.1.6.2)
+  - ContextMenu.iOS (~> 1.1.0)
+  - DateTools (= 1.5.0)
+  - DOUAudioStreamer
+  - FastttCamera
+  - FastttCamera/Filters
+  - FXBlurView
+  - FXForms (= 1.2.13)
+  - IDMPhotoBrowser
+  - JVFloatLabeledTextField
+  - Masonry
+  - MBProgressHUD (= 0.9.1)
+  - MJRefresh
+  - NAKPlaybackIndicatorView
+  - NJKWebViewProgress
+  - PlayerKit (from `https://github.com/xhzengAIB/PlayerKit`)
+  - pop
+  - PPSSignatureView
+  - Realm (= 0.98.6)
+  - RealReachability
+  - SDCycleScrollView (~> 1.61)
+  - SDWebImage (= 3.7.2)
+  - SSKeychain
+  - TGCameraViewController
+  - TTTAttributedLabel (= 1.13.4)
+  - YYWebImage
+  - ZipArchive
+
+EXTERNAL SOURCES:
+  PlayerKit:
+    :git: https://github.com/xhzengAIB/PlayerKit
+
+CHECKOUT OPTIONS:
+  PlayerKit:
+    :commit: fe97f48d42bbcb5dd4976cd2eac97c1c6cd259c0
+    :git: https://github.com/xhzengAIB/PlayerKit
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  AVOSCloud: a3cd4fd18e2eba50de63c490cbd59fd8892fddee
+  ContextMenu.iOS: 7f3b63915e660f51aada2c4285c40a837b2c9737
+  DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
+  DateTools: b93a2c2017747329c6077c7d7e8a75106e23d0d7
+  DOUAudioStreamer: 14f217bab01b52171fc2bd7d96e1f8fdd50fce68
+  FastttCamera: 51f16712cbd5bdb08bc6231b957325c6be5e478d
+  FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
+  FXForms: 22d5ceafd8ca44d2f2be4827afcf00aaf80184a5
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  IDMPhotoBrowser: b574fe3229754e701f32df271afbc4ac7e4e1997
+  JVFloatLabeledTextField: ea4a3d8387ddd43724c472bb2b8ab39b79af05d4
+  Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
+  NAKPlaybackIndicatorView: 794dd97576fe074bb1844c19ebcbf7509384a47f
+  NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
+  PlayerKit: 018d3e04ddc1de3ed253f477cc0fb1bb36599ce8
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  PPSSignatureView: 746f1fc186dea15c248bc99cc64182f93af131b9
+  Realm: 44803f35418c5d89b27825a564247fcd190de37e
+  RealReachability: 8b6644c6b3145f7552ed83bffb52c49b0f3b55e3
+  SDCycleScrollView: 89ecbb079d23cebfd42987a63d8a446fd344dadb
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  SSKeychain: c71293fa57216a40ab06c23f4085387583293de4
+  TGCameraViewController: 010082bae689f3940b132b310b44e4ddc5a4f8e4
+  TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
+  YYCache: 282f35b5b0990833d0b7a06d864a87141a021da2
+  YYImage: b41b45bc5f32bfcdf67bdfb9c09da9e9832357c0
+  YYWebImage: 8da75a611fd0d2e0f58a273f9ca0bc731614cb0d
+  ZipArchive: e25a4373192673e3229ac8d6e9f64a3e5713c966
+
+COCOAPODS: 0.39.0
