@@ -21,42 +21,80 @@
 #import "HWebView.h"
 #import "HCameraVC.h"
 #import "LFYSessionManager.h"
-
+#import "PlayVC.h"
+#import "BannerDao.h"
+#import "BannerPhotoModel.h"
+#import "BannerCell.h"
 #import <SDWebImage/SDImageCache.h>
-
-
+#import <AVOSCloud/AVOSCloud.h>
+#import <MJRefresh/MJRefresh.h>
 static NSString *cellId = @"cellID";
-
 static void * kContentOffSet = &kContentOffSet;
-
 @interface HomeVC () <UICollectionViewDelegate, UICollectionViewDataSource, SDCycleScrollViewDelegate,RowAdsViewDelegate,ActivityCellDelegate>
-
 @property (nonatomic,strong)HActivityHeadView *headView;
-
 @property (nonatomic, assign) BOOL isYouWang;
-
+@property (nonatomic,strong)NSArray *BannerPhontoArray;
+@property (nonatomic,assign) int  page;
+@property  (nonatomic,strong) HWebView *webView;
 @end
 
 @implementation HomeVC
 
+- (HWebView *)webView{
+ 
+    if (!_webView) {
+        _webView = [[HWebView alloc]init];
+    }
+    return _webView;
+}
+
+-(SDCycleScrollView *)banner{
+
+    if (_banner == nil) {
+        _banner = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, kBannerHeight) imageURLStringsGroup:nil];
+        _banner.placeholderImage = [UIImage imageNamed:@"head,jpg"];
+        _banner.backgroundColor = [UIColor whiteColor];
+        _banner.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+        _banner.autoScrollTimeInterval = 3.5f;
+        _banner.delegate = self;
+        
+        
+    }
+    return _banner;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.collectionView addSubview:self.banner];
     
-//    UIImageView *imageView = [[UIImageView alloc] init];
-//    [self.view addSubview:imageView];
-//    imageView.frame = CGRectMake(100, 100, 200, 200);
-//    
-//    [imageView sd_setImageWithURL:[NSURL URLWithString:@"http://www.iconpng.com/png/windows8_icons2/rfid_sensor.png"] placeholderImage:[UIImage imageNamed:@"home_draw"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//        NSLog(@"%@", NSStringFromCGSize(image.size));
-//        
-//    }];
-//    
-//    return;
+    // 255  100   0
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:255.0/255.0 green:100.0/255.0 blue:0.0/255.0 alpha:1.0]];
     
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor blueColor]];
+    
+    
+    // 设置 标题字体的颜色
+  //  [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:255.0/255.0 green:100.0/255.0 blue:0.0/255.0 alpha:1.0],UITextAttributeTextColor,nil]];
+   // NSLog(@"%@",[UIScreen mainScreen].bounds.size) ;
+    
+    
+    
+     self.tabBarController.navigationItem.title = @"爸妈特爱";
+//    [self.tabBarController.navigationController.navigationItem ]
+
     UIImageView *imageView = [[UIImageView  alloc]init];
     [self.view addSubview:imageView];
     imageView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.collectionView.bounds.size.height);
+    
+//    self.collectionView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//        // 进入刷新状态后会自动调用这个block
+//        self.page=1;
+//        //[self httprequstWithPage:self.page withdish_id:@""];
+//        [self loadNewData];
+//        [self.collectionView  reloadData];
+//    }];
     
     // 1.获得网络监控的管理者
     AFNetworkReachabilityManager *mgr = [AFNetworkReachabilityManager sharedManager];
@@ -100,24 +138,7 @@ static void * kContentOffSet = &kContentOffSet;
                                       initWithTitle:NULL message:@"请检查网络" delegate:NULL
                                       cancelButtonTitle:@"确定" otherButtonTitles:NULL];
             [alertView show];
-            
-            
-//            NSMutableArray *array = [NSMutableArray arrayWithCapacity:1];
-//            
-//            ActivityModel *activity = [[ActivityModel alloc] init];
-//            activity.title = @"半杯咖啡读好书";
-//            activity.media_name = @"半杯咖啡读好书 0评论 2016-05-30 09:21";
-//            NSMutableArray *imageList = [[NSMutableArray alloc] initWithCapacity:1];
-//            
-//            [imageList addObject:[UIImage imageNamed:@"thumb.jpg"]];
-//            [imageList addObject:[UIImage imageNamed:@"thumb.jpg"]];
-//            [imageList addObject:[UIImage imageNamed:@"thumb.jpg"]];
-//            
-//            activity.image_list = imageList;
-//            activity.display_url = @"http://toutiao.com/group/6290302795711971585/";
-//            [array addObject:activity];
-            
-            
+ 
         }
         
     }];
@@ -125,15 +146,30 @@ static void * kContentOffSet = &kContentOffSet;
     
     [self setup];
     
-    [self loadNewData];
+   // [self loadNewData];
     
-    [self.collectionView reloadData];
+    //[self.collectionView reloadData];
     
 }
 
+- (void)getbannerMessage {
+    [self showProgressView:nil];
+    [ BannerDao getBannerPhotoWithUserId:nil sucess:^(NSArray *list) {
+        [self hidenProgress];
+        self.BannerPhontoArray = list;
+        [self.collectionView reloadData];
+    } fail:^{
+        [self hidenProgress];
+        [self showAlertView:@"提示" content:@"请求数据失败，请检查网络"];
+    }];
+}
 
-
-    
+- (void)showProgressView:(NSString *)message{
+    MBProgressHUD *pro = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    pro.labelFont = [UIFont systemFontOfSize:15];
+    pro.labelText = message;
+    [self.view bringSubviewToFront:self.navigationController.navigationBar];
+}
 
 
 
@@ -142,86 +178,53 @@ static void * kContentOffSet = &kContentOffSet;
 
 //api/article/recent/?source=0&count=20&category=童书绘本&offset=0
 //  &#31461;&#20070;&#32472;&#26412;
-- (void)loadNewData{
-//、、ReachabilityStatus status = [RealReachability currentReachabilityStatus];
-//    if (afn == 0) {
+//- (void)loadNewData{
+//
+//        [LFYSessionManager dataWithUrlString:@"/api/article/recent/?source=2&count=20&category=%E7%AB%A5%E4%B9%A6%E7%BB%98%E6%9C%AC&offset=0" andSuccessBlock:^(id data) {
+//            
+//            //NSLog(@"%@",data);
+//            NSArray * arr = [[NSArray alloc] init];
+//            NSMutableArray * arrM = @[].mutableCopy;
+//            arr = data[@"data"];
+//            
+//            
+//            for (int i = 0;  i < arr.count; i ++) {
+//                ActivityModel * model = [[ActivityModel alloc] iniTWithDict:(NSDictionary *)data[@"data"][0]];
+//                model.image_list = ((NSDictionary *)arr[i])[@"image_list"];
+//                model.middle_image =((NSDictionary *)arr[i])[@"middle_image"];
+//                model.title=((NSDictionary *)arr[i])[@"title"];
+//                model.media_name =((NSDictionary *)arr[i])[@"media_name"];
+//                model.display_url =((NSDictionary *)arr[i])[@"display_url"];
+//                
+//                if (model.image_list.count == 0)
+//                {
+//                    //                            return cell;
+//                    NSLog(@"没有图片不加载");
+//                    
+//                }else{
+//                    [arrM addObject:model];
+//                    //    [arrM addObject:model];
+//                    NSLog(@"%@",model);
+//                }
+//                NSLog(@"请求成功");
+//                self.dataSource = arrM;
+//                
+//                [self.collectionView reloadData];
+//                
+//            }
+//            
+//        } failureBlock:^(NSError *error) {
+//            
+//        }];
 //    
-//        NSMutableArray *array = [NSMutableArray arrayWithCapacity:1];
-//        
-//        ActivityModel *activity = [[ActivityModel alloc] init];
-//        activity.title = @"半杯咖啡读好书";
-//        activity.media_name = @"半杯咖啡读好书 0评论 2016-05-30 09:21";
-//        NSMutableArray *imageList = [[NSMutableArray alloc] initWithCapacity:1];
-//        
-//        [imageList addObject:[UIImage imageNamed:@"thumb.jpg"]];
-//        [imageList addObject:[UIImage imageNamed:@"thumb.jpg"]];
-//        [imageList addObject:[UIImage imageNamed:@"thumb.jpg"]];
-//        
-//        activity.image_list = imageList;
-//        activity.display_url = @"http://toutiao.com/group/6290302795711971585/";
-//        [array addObject:activity];
-//        
-//        
-//    }else{
-//    if (AFNetworkReachabilityStatus == AFNetworkReachabilityStatusNotReachable){
-//        if (&la_status == AFNetworkReachabilityStatusNotReachable) {
-    
-            
-//    if (self.isYouWang) {
-        [LFYSessionManager dataWithUrlString:@"/api/article/recent/?source=2&count=20&category=%E7%AB%A5%E4%B9%A6%E7%BB%98%E6%9C%AC&offset=0" andSuccessBlock:^(id data) {
-            
-            //NSLog(@"%@",data);
-            NSArray * arr = [[NSArray alloc] init];
-            NSMutableArray * arrM = @[].mutableCopy;
-            arr = data[@"data"];
-            
-            
-            for (int i = 0;  i < arr.count; i ++) {
-                ActivityModel * model = [[ActivityModel alloc] iniTWithDict:(NSDictionary *)data[@"data"][0]];
-                model.image_list = ((NSDictionary *)arr[i])[@"image_list"];
-                model.middle_image =((NSDictionary *)arr[i])[@"middle_image"];
-                model.title=((NSDictionary *)arr[i])[@"title"];
-                model.media_name =((NSDictionary *)arr[i])[@"media_name"];
-                model.display_url =((NSDictionary *)arr[i])[@"display_url"];
-                
-                if (model.image_list.count == 0)
-                {
-                    //                            return cell;
-                    NSLog(@"没有图片不加载");
-                    
-                }else{
-                    [arrM addObject:model];
-                    //    [arrM addObject:model];
-                }
-                NSLog(@"请求成功");
-                self.dataSource = arrM;
-                
-                [self.collectionView reloadData];
-                
-            }
-            
-        } failureBlock:^(NSError *error) {
-            
-        }];
-//    }
-//else {
-//        
-//        
-//        
-//    }
-//        
-
-    
-}
+//}
 
 - (NSMutableArray *)dataSource{
 
     if (_dataSource == nil) {
         
         _dataSource = [NSMutableArray array];
-        
-        
-        
+
     }
     
     return _dataSource;
@@ -229,7 +232,8 @@ static void * kContentOffSet = &kContentOffSet;
 }
 
 - (void)setup{
-//    _dataSource = [[DataManager shareInstance] getActivityData];
+    // 开启本地数据源 加载新闻 
+   _dataSource = [[DataManager shareInstance] getActivityData];
     [self.view addSubview:self.collectionView];
     [self addBanner];
     [self addActivityTitleView];
@@ -243,6 +247,7 @@ static void * kContentOffSet = &kContentOffSet;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    
     [super viewWillAppear:animated];
     self.tabBarController.title = @"爸妈特爱";
 }
@@ -258,33 +263,25 @@ static void * kContentOffSet = &kContentOffSet;
     [query orderByAscending:@"order"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error==NULL && objects!= NULL && objects.count > 0) {
-            AVFile* imageFile1 = [objects[0] objectForKey:@"BannerPhoto"];
-            AVFile* imageFile2 = [objects[1] objectForKey:@"BannerPhoto"];
-            AVFile* imageFile3 = [objects[2] objectForKey:@"BannerPhoto"];
-            AVFile* imageFile4 = [objects[3] objectForKey:@"BannerPhoto"];
-            AVFile* imageFile5 = [objects[4] objectForKey:@"BannerPhoto"];
-            AVFile* imageFile6 = [objects[5] objectForKey:@"BannerPhoto"];
             
-            NSArray *array = @[[imageFile1 url],[imageFile2 url],[imageFile3 url],[imageFile4 url],[imageFile5 url],[imageFile6 url]];
-            
-            SDCycleScrollView *banner = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, kBannerHeight) imageURLStringsGroup:array];
-            banner.placeholderImage = [UIImage imageNamed:@"head.jpg"];
-
-            banner.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
-            banner.autoScrollTimeInterval = 3.5f;
-            banner.delegate = self; 
-            [self.collectionView addSubview:banner];
-            
+            NSMutableArray *arrM = [NSMutableArray  arrayWithCapacity:42];
+            for (int i = 0; i < objects.count; i ++) {
+                AVFile* imageFile1 = [objects[i] objectForKey:@"BannerPhoto"];
+                NSString *bannerurl = [imageFile1 url];
+                [arrM addObject:bannerurl];
+            }
+            self.banner.imageURLStringsGroup = arrM;
         }
     }];
-    
 }
 
 - (void)initadsView{
     RowAdsView *adsView = [[RowAdsView alloc] initWithPostionY:kBannerHeight];
+
     adsView.adsArray = [[DataManager shareInstance] getAdsArray];
     adsView.adsDelegate = self;
     [self.collectionView addSubview:adsView];
+  
 }
 
 - (UICollectionView *)collectionView{
@@ -318,24 +315,21 @@ static void * kContentOffSet = &kContentOffSet;
     
     ActivityCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     cell.delegate = self;
-   
     cell.activityModel = self.dataSource[indexPath.row];
+    
+    // 加载本地的时候的cell
     
     return cell;
 }
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-//    if (indexPath.row == 2) {
-//        //测试用代码
-////        [self.tabBarController.navigationController pushViewController:[[HCameraVC alloc] init] animated:NO];
-//    }
-    ActivityModel *model = self.dataSource[indexPath.row];
-//    ActivityCell *cell = (ActivityCell *)[collectionView cellForItemAtIndexPath:indexPath];
-//    NSLog(@"url %@",cell.activityModel.displayURL);
-    HWebView *webView = [[HWebView alloc] initWithURLString:model.display_url];
-    [self.tabBarController.navigationController pushViewController:webView animated:YES];
+    ActivityCell *cell = (ActivityCell *)[collectionView cellForItemAtIndexPath:indexPath];
+ 
+        self.webView.urlstr = cell.activityModel.displayURL;
+        [self.tabBarController.navigationController pushViewController:self.webView animated:YES];
     
+
 }
 
 #pragma mark kvo
@@ -371,47 +365,36 @@ static void * kContentOffSet = &kContentOffSet;
 }
 
 - (void)selectImageViewListAtIndex:(NSIndexPath *)indexPath data:(ActivityModel *)data{
-    HWebView *webView = [[HWebView alloc] initWithURLString:data.display_url];
+    HWebView *webView = [[HWebView alloc] initWithURLString:data.displayURL];
     [self.tabBarController.navigationController pushViewController:webView animated:YES];
 }
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
-    NSString *aiqiyi = @"http://www.iqiyi.com/kszt_phone/bbegdq.html";
-    NSString *weiixn=@"http://mp.weixin.qq.com/s?__biz=MzI0MjQzOTM4NQ==&mid=2247483658&idx=1&sn=488f3b3afdd9fea0d06faf4b4c5a488c&scene=4#wechat_redirect";
-    NSString *yinghuo = @"https://mp.weixin.qq.com/s?__biz=MjM5NTAzNzE4MA==&mid=2652529540&idx=2&sn=1596886f59e4d10e50467d46aa685ce6&scene=2&srcid=0629edxiSPd69JHAzGTUS7hx&from=timeline&isappinstalled=0&key=77421cf58af4a6536104d908149a219a3d559f55883c3a80a18069d721683639ea06d0d0375abdc12e3e22821552bc5d&ascene=2&uin=ODU3MTk2MTIx&devicetype=iPhone+OS9.3.2&version=16031610&nettype=WIFI&fontScale=100&pass_ticket=w%2Fe4Kgho12KeTXg%2F1J9IE8n%2FadcynrckujwZ6Xpm0K4nXat9xmV0lwPfgIvww%2B9n";
-    NSString *peiban = @"http://www.dreamaking.net/schedule/html/main.html?from=groupmessage&isappinstalled=0";
-    if (index == 4) {
-        HWebView *webView  =[[HWebView alloc]initWithURLString:weiixn];
-        [self.tabBarController.navigationController pushViewController:webView animated:YES];
-    }else if(index == 5){
-        HWebView *webView  =[[HWebView alloc]initWithURLString:yinghuo];
-        [self.tabBarController.navigationController pushViewController:webView animated:YES];
-    }else if(index == 0){
-        HWebView *webView  =[[HWebView alloc]initWithURLString:peiban];
-        [self.tabBarController.navigationController pushViewController:webView animated:YES];
-    }
 
-    
-    else{
-    HWebView *webView = [[HWebView alloc] initWithURLString:aiqiyi];
-        [self.tabBarController.navigationController pushViewController:webView animated:YES];
-    }
-    
-}
+
+  // 点击多次cell  只响应最后一次
+    AVQuery* query = [AVQuery queryWithClassName:AT_BANNER];
+    [query orderByAscending:@"order"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (![self.tabBarController.navigationController.childViewControllers.lastObject isKindOfClass:[HWebView class]]) {
+            NSString *bannerurl = [objects[index] objectForKey:@"Banner_URL"];
+            HWebView *webView = [[HWebView alloc] initWithURLString:bannerurl];
+            [self.tabBarController.navigationController pushViewController:webView animated:YES];
+        }
+    }];
+     }
 - (void)dealloc
 {
     [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     
-    [self.headView removeFromSuperview ];
-      [self setup];
+    //[self.headView removeFromSuperview ];
+    //[self setup];
  
-    [self loadNewData];
-    
-    
+   // [self loadNewData];
+      self.tabBarController.navigationItem.title = @"爸妈特爱";
     // 1.获得网络监控的管理者
     AFNetworkReachabilityManager *mgr = [AFNetworkReachabilityManager sharedManager];
     
@@ -424,9 +407,6 @@ static void * kContentOffSet = &kContentOffSet;
                 break;
                 
             case AFNetworkReachabilityStatusNotReachable: // 没有网络(断网)
-                
-                
-                
                 
                 NSLog(@"没有网络(断网)");
                 break;
@@ -463,5 +443,19 @@ static void * kContentOffSet = &kContentOffSet;
         NSLog(@"viewDidAppear+++");
 }
 
+#pragma mark  --下拉刷新 
+-(void)HeaderRereshing{
+    self.page = 1;
+    
+}
+#pragma mark -- 上拉加载
+-(void)FooterRereshing{
+    
+    self.page ++;
+}
 
+//- (BOOL)prefersStatusBarHidden
+//{
+//    return YES;
+//}
 @end

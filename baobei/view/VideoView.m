@@ -10,8 +10,6 @@
 
 @interface  VideoView()
 
-
-
 @end
 
 @implementation VideoView
@@ -28,6 +26,5 @@
     }
     return self;
 }
-
 
 @end

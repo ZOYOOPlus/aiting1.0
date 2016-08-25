@@ -58,6 +58,16 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "BFKit/Source/Languages/en.lproj"
+  install_resource "BFKit/Source/Languages/id.lproj"
+  install_resource "BFKit/Source/Languages/it.lproj"
+  install_resource "BFKit/Source/Languages/pt-Br.lproj"
+  install_resource "BFKit/Source/Languages/ru.lproj"
+  install_resource "BFKit/Source/Languages/sv.lproj"
+  install_resource "BFKit/Source/Languages/uk.lproj"
+  install_resource "BFKit/Source/Languages/vi.lproj"
+  install_resource "BFKit/Source/Languages/zh-Hans.lproj"
+  install_resource "BFKit/Source/Languages/zh-Hant.lproj"
   install_resource "DateTools/DateTools/DateTools.bundle"
   install_resource "GPUImage/framework/Resources/lookup.png"
   install_resource "GPUImage/framework/Resources/lookup_amatorka.png"
@@ -92,6 +102,16 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "TGCameraViewController/TGCameraViewController/Resources/TGCameraViewController.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "BFKit/Source/Languages/en.lproj"
+  install_resource "BFKit/Source/Languages/id.lproj"
+  install_resource "BFKit/Source/Languages/it.lproj"
+  install_resource "BFKit/Source/Languages/pt-Br.lproj"
+  install_resource "BFKit/Source/Languages/ru.lproj"
+  install_resource "BFKit/Source/Languages/sv.lproj"
+  install_resource "BFKit/Source/Languages/uk.lproj"
+  install_resource "BFKit/Source/Languages/vi.lproj"
+  install_resource "BFKit/Source/Languages/zh-Hans.lproj"
+  install_resource "BFKit/Source/Languages/zh-Hant.lproj"
   install_resource "DateTools/DateTools/DateTools.bundle"
   install_resource "GPUImage/framework/Resources/lookup.png"
   install_resource "GPUImage/framework/Resources/lookup_amatorka.png"

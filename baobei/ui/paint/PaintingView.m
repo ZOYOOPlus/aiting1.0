@@ -92,14 +92,15 @@
     }
     
     // Set the view's scale factor
-    self.contentScaleFactor = 1.0;
+    // 调整笔刷的大小
+    self.contentScaleFactor = 1;
     
     // Setup OpenGL states
     glMatrixMode(GL_PROJECTION);
     CGRect frame = self.bounds;
     CGFloat scale = self.contentScaleFactor;
-    // Setup the view port in Pixels
-    glOrthof(0, frame.size.width * scale, 0, frame.size.height * scale, -1, 1);
+    // Setup the view port in Pixels设置在像素的视口
+    glOrthof(0, frame.size.width * scale, 0, frame.size.height * scale, -1.1, 1);
     glViewport(0, 0, frame.size.width * scale, frame.size.height * scale);
     glMatrixMode(GL_MODELVIEW);
     
@@ -135,7 +136,7 @@
     switch (brushNo) {
         case 1:
             
-            brushImage = [UIImage imageNamed:@"Particle2.png"].CGImage;
+            brushImage = [UIImage imageNamed:@"Particle2.jpg"].CGImage;
             break;
 
 
@@ -210,7 +211,7 @@
 	}
 }
 
-- (BOOL)createFramebuffer
+- (BOOL)createFramebuffer//创建帧缓冲
 {
 	// Generate IDs for a framebuffer object and a color renderbuffer
 	glGenFramebuffersOES(1, &viewFramebuffer);
@@ -242,7 +243,7 @@
 }
 
 // Clean up any buffers we have allocated.
-- (void)destroyFramebuffer
+- (void)destroyFramebuffer  //摧毁帧缓冲
 {
 	glDeleteFramebuffersOES(1, &viewFramebuffer);
 	viewFramebuffer = 0;
@@ -288,6 +289,7 @@
 }
 
 // Drawings a line onscreen based on where the user touches
+//渲染线从点
 - (void) renderLineFromPoint:(CGPoint)start toPoint:(CGPoint)end
 {
 #ifdef DEBUG
@@ -337,16 +339,23 @@
 }
 
 // Reads previously recorded points and draws them onscreen. This is the Shake Me message that appears when the application launches.
+//- (void) playback:(NSMutableArray*)recordedPaths
+//-(void)playback{
+//    [self performSelector:@selector(playback:)];
+//}
+
 - (void) playback:(NSMutableArray*)recordedPaths
 {
+    
 	NSData*				data = [recordedPaths objectAtIndex:0];
 	CGPoint*			point = (CGPoint*)[data bytes];
 	NSUInteger			count = [data length] / sizeof(CGPoint),
 						i;
 	
 	// Render the current path
-	for(i = 0; i < count - 1; ++i, ++point)
-		[self renderLineFromPoint:*point toPoint:*(point + 1)];
+	for(i = 0; i < count - 1; ++i, --point)
+        
+    [self renderLineFromPoint:*point toPoint:*(point - 1)];
 	
 	// Render the next path after a short delay 
 	[recordedPaths removeObjectAtIndex:0];
@@ -453,9 +462,8 @@
 	CGContextRef ctx = CGBitmapContextCreate(data, w, h, 8, w * 4, space, kCGImageAlphaPremultipliedLast);
 	CGImageRef img = CGBitmapContextCreateImage(ctx);
 	
-	UIGraphicsBeginImageContext([[UIScreen mainScreen] bounds].size); //保存用サイズのコンテキストを作成
-	CGContextDrawImage(UIGraphicsGetCurrentContext(), CGRectMake(0, 0, w, h), img);
-	CGContextRotateCTM(UIGraphicsGetCurrentContext(), M_PI); //回転
+	UIGraphicsBeginImageContext([[UIScreen mainScreen] bounds].size); //保存创建使用大小的背景下，	CGContextDrawImage(UIGraphicsGetCurrentContext(), CGRectMake(0, 0, w, h), img);
+	CGContextRotateCTM(UIGraphicsGetCurrentContext(), M_PI); //回转
 	UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
 	CGContextRelease(ctx);
 	CGColorSpaceRelease(space);
@@ -480,7 +488,7 @@
     CGContextDrawImage(textureContext, CGRectMake(0.0, 0.0, width, height), [aImage CGImage]);
     CGContextRelease(textureContext);
     
-    // テクスチャを作成し、データを転送
+    // 创建一个纹理，传输数据
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)width, (int)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, bits);
     glBindTexture(GL_TEXTURE_2D, 0);
     free(bits);

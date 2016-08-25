@@ -38,6 +38,7 @@
         _title.textColor = [UIColor whiteColor];
         _title.font = [UIFont fontWithName:APP_FONT size:18];
     }
+    
     return  _title;
 }
 
@@ -59,7 +60,8 @@
     if (_ads.imageHight) {
         self.imageView.highlightedImage = [UIImage imageNamed:_ads.imageHight];
     }
-    
+       self.layer.masksToBounds = YES; //没这句话它圆不起来
+       self.layer.cornerRadius = 8.0; //设置图片圆角的尺度
     self.backgroundColor = [UIColor colorWithHexString:_ads.color];
 }
 
@@ -85,7 +87,6 @@
     }else{
     }
 }
-
 - (void)setSelected:(BOOL)selected{
     [super setSelected:selected];
     if (selected) {

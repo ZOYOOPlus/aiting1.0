@@ -11,9 +11,16 @@
 
 #import <UIKit/UIKit.h>
 #import "HCommon.h"
+#import "BookPhotoModel.h"
 
 @interface HImageListCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *imageView;
+
+@property (nonatomic, copy) NSString *imgStr;
+
+@property (nonatomic, copy, readonly) NSString *playFile;
+
+@property (nonatomic,strong)BookPhotoModel *yinghuoPhotoModel;
 
 @end

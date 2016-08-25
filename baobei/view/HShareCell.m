@@ -44,7 +44,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    self.title.text = @"如果有一天";
+    self.title.text = @"朋友圈";
     self.iconImage.image = [UIImage imageNamed:@"Action_Moments.png"];
 
     [self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {

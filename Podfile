@@ -28,5 +28,7 @@ target ‘baobei’ do
     pod 'ContextMenu.iOS', '~> 1.1.0'
     pod "PPSSignatureView"
     pod 'RealReachability'
-	
+    pod 'ActionSheetPicker'
+  pod 'BFKit'
+
 end

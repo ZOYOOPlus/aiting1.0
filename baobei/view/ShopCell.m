@@ -10,6 +10,7 @@
 #import "ShopPhotoModel.h"
 @interface ShopCell ()
 @property (nonatomic, strong) UIImageView *goodsImageView;
+
 @end
 
 @implementation ShopCell
@@ -19,16 +20,16 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupUI];
-
     }
-    
     return self;
 }
 
 - (void)setShopPhotoMode:(ShopPhotoModel *)shopPhotoMode {
     _shopPhotoMode = shopPhotoMode;
-//    [self.goodsImageView sd_setImageWithURL];
-//    [self.goodsImageView sd_setImageWithURL:placeholderImage:[UIImage imageNamed:@"head"] options:nil]];
+    self.price.text = shopPhotoMode.GP_Price;
+    self.sales.text = shopPhotoMode.GP_Sell;
+    self.address.text = shopPhotoMode.GP_Address;
+    self.goodsName.text = shopPhotoMode.GP_Name;
     [self.goodsImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",shopPhotoMode.Photos]] placeholderImage:[UIImage imageNamed:@"head.jpg"]];
 }
 
@@ -37,11 +38,10 @@
     self.backgroundColor = [UIColor whiteColor];
     self.layer.borderColor = [UIColor grayColor].CGColor;
     self.layer.borderWidth = 1.0f;
-    
     self.contentView.clipsToBounds = YES;
     [self.contentView addSubview:self.goodsImageView];
     [self.contentView addSubview:self.price];
-    [self.contentView addSubview:self.address];
+  //  [self.contentView addSubview:self.address];
     [self.contentView addSubview:self.sales];
     [self.contentView addSubview:self.goodsName];
 }
@@ -102,37 +102,43 @@
 //    }
    
 //    self.price.text = @"99元";
-//    self.goodsName.text = @"儿童主题乐园";
-    self.address.text = @"99元";
-    self.sales.text = @"已售1040份";
+  //  self.goodsName.text = @"商品名";
+//   self.address.text = @"北京";
+//    self.sales.text = @"已售1040份";
+  
+   
 
     [self.price sizeToFit];
-    [self.address sizeToFit];
+   // [self.address sizeToFit];
     [self.sales sizeToFit];
     [self.goodsName sizeToFit];
    
+//    _goodsImageView.layer.borderWidth = 5;
+//    _goodsImageView.layer.borderColor = [[UIColor orangeColor] CGColor];
+    
     [self.goodsImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.contentView.mas_width).offset(-5);
         make.centerX.equalTo(self.contentView.mas_centerX);
         make.height.equalTo(self.contentView.mas_height).multipliedBy(kImageProportion);
-        make.top.equalTo(self.contentView.mas_top).offset(20);
+        make.top.equalTo(self.contentView.mas_top).offset(15);
     }];
     [self.price mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView.mas_left).offset(5);
-        make.bottom.equalTo(self.goodsImageView.mas_bottom).offset(-5);
+        make.left.equalTo(self.contentView.mas_left).offset(55);
+        make.top.equalTo(self.goodsImageView.mas_bottom).offset(20);
     }];
     [self.goodsName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView.mas_left).offset(5);
-        make.top.equalTo(self.goodsImageView.mas_bottom).offset(5);
+        make.top.equalTo(self.goodsImageView.mas_bottom).offset(20);
     }];
     
-    [self.address mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView.mas_left).offset(5);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-4);
-    }];
-    [self.sales mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [self.address mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.contentView.mas_left).offset(5);
+//        make.bottom.equalTo(self.contentView.mas_bottom).offset(-4);
+//    }];
+    
+        [self.sales mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.contentView.mas_right).offset(-5);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-4);
+        make.top.equalTo(self.goodsImageView.mas_bottom).offset(20);
     }];
 }
 

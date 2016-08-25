@@ -15,6 +15,14 @@
         self.objectIdl = object.objectId;
         AVFile *file = [object objectForKey:@"Photos"];
         self.Photos = file.url?file.url:@"";
+        NSString *price = [object  objectForKey:@"GP_Price"];
+        self.GP_Price =price;
+        NSString  *sell   = [object  objectForKey:@"GP_Sell"];
+        self.GP_Sell = sell;
+        NSString *GPname = [object  objectForKey:@"GP_Name"];
+        self.GP_Name = GPname;
+        NSString *address = [object  objectForKey:@"GP_Address"];
+        self.GP_Address = address;
     }
     return self;
 }

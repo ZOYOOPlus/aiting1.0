@@ -38,6 +38,7 @@
                 UIView *backgroundView = [[UIView alloc] initWithFrame:_tableView.bounds];
                 backgroundView.backgroundColor = _tableView.backgroundColor;
                 _tableView.backgroundView = backgroundView;
+                
             }
         }
     }

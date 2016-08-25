@@ -13,6 +13,7 @@
 + (void)getShopPhotoWithUserId:(NSString *)useid sucess:(void(^)(NSArray *list))sucess fail:(void(^)())fail {
    
     AVQuery *query = [AVQuery queryWithClassName:@"GoodsPhoto"];
+     [query orderByAscending:@"order"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
             fail(error);
@@ -21,6 +22,7 @@
             for (AVObject *object in objects) {
                 ShopPhotoModel *model = [[ShopPhotoModel alloc] initWithObject:object];
                 [arrayM addObject:model];
+                NSLog(@"%@",model);
             }
             sucess(arrayM);
         }

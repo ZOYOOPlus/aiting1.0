@@ -36,7 +36,6 @@ static NSString *cellID = @"HImageListCell";
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithHexString:@"#FEFFFF"];
-        
         [self.contentView addSubview:self.title];
         [self.contentView addSubview:self.attribute];
         //[self.contentView addSubview:self.likeImageView];
@@ -92,7 +91,10 @@ static NSString *cellID = @"HImageListCell";
 //    attributeText = [attributeText stringByAppendingString:_activityModel.author];
 //    attributeText = [attributeText stringByAppendingString:@"  "];
 //    attributeText = [attributeText stringByAppendingString:_activityModel.ti];
-    self.attribute.text = _activityModel.media_name;
+    //加载JSON
+  //  self.attribute.text = _activityModel.media_name;
+    
+      self.attribute.text = _activityModel.author;
     [self.collectionView reloadData];
 }
 
@@ -124,19 +126,19 @@ static NSString *cellID = @"HImageListCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 //    return self.activityModel.imageList.count;
-    return self.activityModel.image_list.count;
+    return self.activityModel.imageList.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     HImageListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
-    if (self.activityModel.image_list.count != 0) {
-        
-//        [cell.imageView setYy_imageURL:[NSURL URLWithString:self.activityModel.image_list[indexPath.row][@"url"]]];
-        [cell.imageView yy_setImageWithURL:[NSURL URLWithString:self.activityModel.image_list[indexPath.row][@"url"]] placeholder:[UIImage imageNamed:@"head.jpg"]];
-    }
-        
-      
+  
+    // 处理JSon 数据时  显示的Cell
+//    if (self.activityModel.image_list.count != 0) {
+//        [cell.imageView yy_setImageWithURL:[NSURL URLWithString:self.activityModel.image_list[indexPath.row][@"url"]] placeholder:[UIImage imageNamed:@"head.jpg"]];
+//    }
     
+      //  不处理Json时显示的数据
+     [cell.imageView setYy_imageURL:[NSURL URLWithString:self.activityModel.imageList[indexPath.row]]];
     
     return cell;
 }

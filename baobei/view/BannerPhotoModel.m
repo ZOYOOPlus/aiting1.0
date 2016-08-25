@@ -17,6 +17,7 @@
         self.Banner_URL = file.url?file.url:@"";
         self.BannerPhoto = file.url?file.url:@"";
     }
+       
     return self;
 }
 

@@ -13,5 +13,9 @@
 #import "TableVC.h"
 #import "HCommon.h"
 @interface ProfilesVC : TableVC
+//@property (nonatomic,strong)UIImageView *imageView;
+@property (nonatomic,strong)UIImageView *headView;
+@property (nonatomic, strong)UIButton  *iconBtn;
+@property (nonatomic ,strong)UILabel   *iconName;
 
 @end

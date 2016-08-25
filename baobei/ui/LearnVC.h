@@ -8,8 +8,10 @@
 
 #import "BaseVC.h"
 #import "HCommon.h"
-
+#import "BookPhotoModel.h"
+#import "XNGuideView.h"
 
 @interface LearnVC : BaseVC
+@property (assign , nonatomic)NSIndexPath * bookIndexPath;
 
 @end

@@ -7,18 +7,44 @@
 //
 
 #import "BannerCell.h"
+#import "BannerPhotoModel.h"
+@interface  BannerCell()
+@property (nonatomic, strong) UIImageView *BannerImageView;
 
+@end
 @implementation BannerCell
-//- (void)setShopPhotoMode:(ShopPhotoModel *)shopPhotoMode {
-//    _shopPhotoMode = shopPhotoMode;
-//    //    [self.goodsImageView sd_setImageWithURL];
-//    //    [self.goodsImageView sd_setImageWithURL:placeholderImage:[UIImage imageNamed:@"head"] options:nil]];
-//    [self.goodsImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",shopPhotoMode.Photos]] placeholderImage:[UIImage imageNamed:@"head.jpg"]];
-//}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setupUI];
+        
+    }
+    
+    return self;
+}
+
+- (void)setupUI {
+    self.backgroundColor = [UIColor whiteColor];
+    self.layer.borderColor = [UIColor grayColor].CGColor;
+    self.layer.borderWidth = 1.0f;
+    
+    self.contentView.clipsToBounds = YES;
+    [self.contentView addSubview:self.BannerImageView];
+
+}
+
+
 - (void)setBannerPhotoMode:(BannerPhotoModel *)bannerPhotoMode
 {
     _bannerPhotoMode = bannerPhotoMode;
+
+        [self.BannerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",bannerPhotoMode.BannerPhoto]] placeholderImage:[UIImage imageNamed:@"head.jpg"]];
     
-        
+}
+
+-(void)prepareForReuse{
+    
 }
 @end

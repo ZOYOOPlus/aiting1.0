@@ -10,6 +10,13 @@
 
 @implementation HImageListCell
 
+- (void)setImgStr:(NSString *)imgStr {
+    _imgStr = imgStr;
+    NSString *file = [NSString stringWithFormat:@"%@.acc", imgStr];
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    _playFile = [path stringByAppendingPathComponent:file];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -23,10 +30,17 @@
 - (UIImageView *)imageView{
     if (!_imageView) {
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        
     }
     return _imageView;
 }
 
-
+// set 方法
+-(void)setBookPhotoModel:(BookPhotoModel *)yinghuoPhotoModel
+{
+    _yinghuoPhotoModel = yinghuoPhotoModel;
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",yinghuoPhotoModel.yinghuoPhoto]] placeholderImage:[UIImage imageNamed:@"head.jpg"]];
+    
+}
 
 @end

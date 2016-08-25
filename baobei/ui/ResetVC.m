@@ -10,9 +10,9 @@
 
 @interface ResetVC ()<UITextFieldDelegate>
 @property (nonatomic,strong) UIButton     *nestButton;
-//@property (nonatomic,strong) UIButton     *codeButton;
-//@property (nonatomic,strong) UITextField *phoneTextField;
-//@property (nonatomic,strong) UITextField *codeTextField;
+@property (nonatomic,strong) UIButton     *codeButton;
+@property (nonatomic,strong) UITextField *phoneTextField;
+@property (nonatomic,strong) UITextField *codeTextField;
 @property (nonatomic,strong) UITextField *pwdTextField;
 @property (nonatomic,strong) UITextField *pwdTextField2;
 @end
@@ -27,32 +27,43 @@
 - (void)setUp{
     
     _nestButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _nestButton.layer.cornerRadius=15.0f;
+    _nestButton.layer.masksToBounds=YES;
     [_nestButton setBackgroundColor:[UIColor  orangeColor]];
     [_nestButton setTitle:@"下一步" forState:(UIControlStateNormal)];
     [_nestButton addTarget:self action:@selector(clickRegistButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_nestButton];
     
-//    _codeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    [_codeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
-//    [_codeButton addTarget:self action:@selector(getCodeButton:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:_codeButton];
-//    
-//    _phoneTextField = [[UITextField alloc] init];
-//    _phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
-//    _phoneTextField.textColor = [UIColor blackColor];
-//    _phoneTextField.delegate = self;
-//    _phoneTextField.placeholder = @"📱请输入您的手机号";
-//    _phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
-//    [self.view addSubview:_phoneTextField];
+    _codeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [_codeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+    _codeButton.layer.borderWidth =3;
+    _codeButton.layer.borderColor = [[UIColor orangeColor]CGColor];
+    [_codeButton addTarget:self action:@selector(getCodeButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_codeButton];
     
-//    _codeTextField = [[UITextField alloc] init];
-//    _codeTextField.borderStyle = UITextBorderStyleRoundedRect;
-//    _codeTextField.textColor = [UIColor blackColor];
-//    _codeTextField.delegate = self;
-//    _codeTextField.placeholder = @"㊙️请输入短信验证码";
-//    _codeTextField.keyboardType = UIKeyboardTypeNumberPad;
-//    [self.view addSubview:_codeTextField];
-//    
+    _phoneTextField = [[UITextField alloc] init];
+    _phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
+    _phoneTextField.textColor = [UIColor blackColor];
+    _phoneTextField.delegate = self;
+    _phoneTextField.placeholder = @"📱请输入您的手机号";
+    _phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _phoneTextField.layer.borderWidth =2.0f ;
+    _phoneTextField.layer.cornerRadius=15.0f;
+    _phoneTextField.layer.masksToBounds=YES;
+    _pwdTextField.layer.borderWidth= 1.0f;
+    _phoneTextField.layer.borderColor = [[UIColor orangeColor]CGColor];
+    [self.view addSubview:_phoneTextField];
+    
+    _codeTextField = [[UITextField alloc] init];
+    _codeTextField.borderStyle = UITextBorderStyleRoundedRect;
+    _codeTextField.textColor = [UIColor blackColor];
+    _codeTextField.delegate = self;
+    _codeTextField.layer.borderColor = [[UIColor orangeColor]CGColor];
+    _codeTextField.layer.borderWidth = 2;
+    _codeTextField.placeholder = @"㊙️请输入短信验证码";
+    _codeTextField.keyboardType = UIKeyboardTypeNumberPad;
+    [self.view addSubview:_codeTextField];
+
     
     [self.nestButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
@@ -62,25 +73,26 @@
     }];
     
     
-//    
-//    [self.phoneTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(self.view.mas_centerX);
-//        make.width.equalTo(self.view.mas_width).offset(-10);
-//        make.height.mas_equalTo(60);
-//        make.top.equalTo(self.view.mas_top).offset(20);
-//    }];
-//    
-//    [_codeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.view.mas_left).offset(5);
-//        make.bottom.equalTo(self.phoneTextField.mas_bottom).offset(60);
-//        make.size.mas_equalTo(CGSizeMake(200, 60));
-//    }];
-//    
-//    [_codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.view.mas_left).offset(220);
-//        make.bottom.equalTo(self.phoneTextField.mas_bottom).offset(60);
-//        make.size.mas_equalTo(CGSizeMake(100, 60));
-//    }];
+    
+    [self.phoneTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.width.equalTo(self.view.mas_width).offset(-10);
+        make.height.mas_equalTo(60);
+        make.top.equalTo(self.view.mas_top).offset(20);
+    }];
+    
+    [_codeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(5);
+       // make.right.equalTo(self.view.mas_right).offset(-5);
+        make.bottom.equalTo(self.phoneTextField.mas_bottom).offset(60);
+        make.size.mas_equalTo(CGSizeMake(200, 60));
+    }];
+    
+    [_codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(220);
+        make.bottom.equalTo(self.phoneTextField.mas_bottom).offset(60);
+        make.size.mas_equalTo(CGSizeMake(100, 60));
+    }];
     
     [self.pwdTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
@@ -113,12 +125,12 @@
                                   cancelButtonTitle:@"确定" otherButtonTitles:NULL];
         [alertView show];
     }else
-        //if(_pwdTextField2.text != _pwdTextField.text){
-        //        UIAlertView *alertView = [[UIAlertView alloc]
-        //                                  initWithTitle:NULL message:@"2次输入密码需要一致！" delegate:NULL
-        //                                  cancelButtonTitle:@"确定" otherButtonTitles:NULL];
-        //        [alertView show];
-        //    }else
+        if(_pwdTextField2.text != _pwdTextField.text){
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:NULL message:@"2次输入密码需要一致！" delegate:NULL
+                                          cancelButtonTitle:@"确定" otherButtonTitles:NULL];
+                [alertView show];
+            }else
     {
         [self.view setUserInteractionEnabled:NO];
         AVUser *user = [AVUser user];
@@ -139,55 +151,56 @@
     
 }
 - (void)getCodeButton:(id)sender{
-//    if (_phoneTextField.text.length <= 0) {
-//        UIAlertView *alertView = [[UIAlertView alloc]
-//                                  initWithTitle:NULL message:@"请填写手机号" delegate:NULL
-//                                  cancelButtonTitle:@"确定" otherButtonTitles:NULL];
-//        [alertView show];
-//    }else{
-//        [AVOSCloud requestSmsCodeWithPhoneNumber:_phoneTextField.text callback:^(BOOL succeeded, NSError *error) {
-//            // 发送失败可以查看 error 里面提供的信息
-//            if (error==NULL && succeeded) {
-//                [self checkCode];
-//            }else{
-//                UIAlertView *alertView = [[UIAlertView alloc]
-//                                          initWithTitle:NULL message:@"获取验证码失败，请重新获取" delegate:NULL
-//                                          cancelButtonTitle:@"确定" otherButtonTitles:NULL];
-//                [alertView show];
-//            }
-//        }];
-//        
-//    }
-//    
-//}
-//// MARK:  -----倒计时
-//- (void)checkCode{
-//    __block int timeout=60; //倒计时时间
-//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
-//    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
-//    dispatch_source_set_event_handler(_timer, ^{
-//        if(timeout<=0){ //倒计时结束，关闭
-//            dispatch_source_cancel(_timer);
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //设置界面的按钮显示 根据自己需求设置
-//                self.codeButton.enabled = true;
-//                [_codeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
-//            });
-//        }else{
-//            int seconds = timeout ;
-//            NSString *strTime = [NSString stringWithFormat:@"%d秒后获取验证码", seconds];
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //设置界面的按钮显示 根据自己需求设置
-//                self.codeButton.enabled = false;
-//                [_codeButton setTitle:strTime forState:UIControlStateNormal];
-//            });
-//            timeout--;
-//            
-//        }
-//    });
-//    dispatch_resume(_timer);
+    if (_phoneTextField.text.length <= 0) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:NULL message:@"请填写手机号" delegate:NULL
+                                  cancelButtonTitle:@"确定" otherButtonTitles:NULL];
+        [alertView show];
+    }else{
+        [AVOSCloud requestSmsCodeWithPhoneNumber:_phoneTextField.text callback:^(BOOL succeeded, NSError *error) {
+            // 发送失败可以查看 error 里面提供的信息
+            if (error==NULL && succeeded) {
+                [self checkCode];
+            }else{
+                UIAlertView *alertView = [[UIAlertView alloc]
+                                          initWithTitle:NULL message:@"获取验证码失败，请重新获取" delegate:NULL
+                                          cancelButtonTitle:@"确定" otherButtonTitles:NULL];
+                [alertView show];
+            }
+        }];
+        
+    }
+    
 }
+// MARK:  -----倒计时
+- (void)checkCode{
+    __block int timeout=60; //倒计时时间
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+    dispatch_source_set_event_handler(_timer, ^{
+        if(timeout<=0){ //倒计时结束，关闭
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的按钮显示 根据自己需求设置
+                self.codeButton.enabled = true;
+                [_codeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+            });
+        }else{
+            int seconds = timeout ;
+            NSString *strTime = [NSString stringWithFormat:@"%d秒后获取验证码", seconds];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的按钮显示 根据自己需求设置
+                self.codeButton.enabled = false;
+                [_codeButton setTitle:strTime forState:UIControlStateNormal];
+            });
+            timeout--;
+            
+        }
+    });
+    dispatch_resume(_timer);
+}
+// 出现导航栏部分黑屏原因 是 隐藏了 需要注销
 //- (BOOL)prefersStatusBarHidden
 //{
 //    return YES;
@@ -206,6 +219,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.title = @"账号验证";
+     [_pwdTextField becomeFirstResponder];
     //    self.tabBarController.title = @"用户注册";
 }
 

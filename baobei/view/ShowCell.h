@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "HCommon.h"
+@class ShowPhotoModel;
+#define kImageProportion 0.7
 
 @interface ShowCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *userName;
+@property (nonatomic,strong)  UILabel *zan; 
 
 
+@property (nonatomic, strong) ShowPhotoModel *showPhotoMode;
 @end

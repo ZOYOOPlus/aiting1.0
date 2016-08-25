@@ -12,11 +12,12 @@
 #define kImageProportion 0.7
 
 @interface ShopCell : UICollectionViewCell
-
-
 @property (nonatomic, strong) UILabel *price;
 @property (nonatomic, strong) UILabel *address;
 @property (nonatomic, strong) UILabel *sales;
 @property (nonatomic, strong) UILabel *goodsName;
+
 @property (nonatomic, strong) ShopPhotoModel *shopPhotoMode;
+
 @end
+

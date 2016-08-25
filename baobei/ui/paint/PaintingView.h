@@ -11,14 +11,15 @@
 //透明度
 #define kBrushOpacity		(0.2 / 3.0)
 #define kBrushPixelStep		1
-//線の太さ　5:細い 1:太い
+//線の太さ　5:細い 1:太い   笔的粗细
 #define kBrushScale_2		2
 #define kBrushScale_3		3
 #define kBrushScale_4		4
 #define kBrushScale_5		5
 #define kBrushScale_8		8
 #define kBrushScale_13		13
-
+#define kBrushScale_20        20
+#define kBrushScale_40        40
 //#define kLuminosity			0.75
 //#define kSaturation			1.0
 
@@ -60,5 +61,7 @@
 -(void)enabled:(BOOL)value;
 - (UIImage *)getImage;
 -(void)setImage:(UIImage*)aImage;
+-(void) playback:(NSMutableArray*)recordedPaths;
+- (void)playback;
 
 @end

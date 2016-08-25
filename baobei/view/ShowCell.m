@@ -7,11 +7,13 @@
 //
 
 #import "ShowCell.h"
-
+#import "ShowPhotoModel.h"
 @interface ShowCell()
 
-@property (nonatomic, strong) UILabel *userName;
+//@property (nonatomic, strong) UILabel *userName;
 @property (nonatomic, strong) UIImageView *likeImageView;
+
+
 
 @end
 
@@ -26,10 +28,32 @@
         [self.contentView addSubview:self.imageView];
         [self.contentView addSubview:self.likeImageView];
         [self.contentView addSubview:self.userName];
+        [self.contentView addSubview:self.zan];
     }
     return self;
 }
 
+- (void)setShowPhotoMode:(ShowPhotoModel *)showPhotoMode{
+    
+        _showPhotoMode = showPhotoMode;
+    
+        self.userName.text = showPhotoMode.SW_name;
+    
+        self.zan.text = showPhotoMode.SW_zan;
+    
+    // 图片赋值
+        [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",showPhotoMode.SW_photo]] placeholderImage:[UIImage imageNamed:@"01"]];
+    
+        //self.imageView.image = [UIImage imageNamed:@"head.jpg"];
+}
+
+- (UILabel *)zan{
+
+    if (!_zan) {
+        _zan = [[UILabel alloc]initWithFrame:CGRectZero];
+    }return _zan;
+
+}
 - (UIImageView *)imageView{
     if (!_imageView) {
         _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
@@ -39,7 +63,7 @@
 
 - (UIImageView *)likeImageView{
     if (!_likeImageView) {
-        _likeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_like_high"]];
+        _likeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_like"] highlightedImage:[UIImage imageNamed:@"home_like_high"]];
     }
     return _likeImageView;
 }
@@ -54,7 +78,7 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-    self.userName.text = @"壮壮";
+    //self.userName.text = @"壮壮";
     [self.userName sizeToFit];
     
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -69,12 +93,20 @@
 
     }];
     [self.likeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(25, 25));
-        make.right.equalTo(self.contentView.mas_right).offset(-5);
-        make.bottom.equalTo(self.contentView.mas_bottom);
+        make.size.mas_equalTo(CGSizeMake(20, 20));
+        make.right.equalTo(self.contentView.mas_right).offset(-45);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(-2);
+    }];
+    
+    [self.zan mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(40, 20));
+        make.right.equalTo(self.contentView.mas_right).offset(-1);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(-2);
     }];
 }
 
-
+-(void)prepareForReuse{
+    
+}
 
 @end

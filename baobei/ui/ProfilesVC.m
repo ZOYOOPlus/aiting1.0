@@ -7,15 +7,14 @@
 //
 
 #import "ProfilesVC.h"
-
 #import "DataManager.h"
 #import "LoginVC.h"
 #import "AvatarCell.h"
 #import "RegistVC.h"
+#import "ShopVC.h"
+
 
 @implementation ProfilesVC
-
-
 - (instancetype)init
 {
     self = [super init];
@@ -27,8 +26,21 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    [self loadDataSource];
+    self.tabBarController.navigationItem.title = @"我的";
+    UIBarButtonItem *shareBtn2 = [[UIBarButtonItem alloc]  initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareClick2)];
     
+    self.navigationItem.rightBarButtonItem = shareBtn2;
+    [self loadDataSource];
+    [self  setup];
+    
+}
+- (void)shareClick2{
+
+
+
+}
+- (void)setup{
+
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -38,6 +50,7 @@
     self.tabBarController.navigationItem.backBarButtonItem = item;
     self.tabBarController.navigationItem.title = @"我的";
     [self loadDataSource];
+    
     [self.tableView reloadData];
 }
 
@@ -61,11 +74,14 @@
     NSMutableDictionary *sectionDictionary = self.dataSource[section][row];
     
     if (!cell) {
-        //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         if(indexPath.section == 0 && indexPath.row == 0){
-            cell = [[AvatarCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell = [[AvatarCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellIdentifier];
+            cell.backgroundColor =[UIColor  orangeColor];
+        
+            
         }else{
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
@@ -77,8 +93,9 @@
         cell.textLabel.text = title;
     }
     if (imageName) {
-        cell.imageView.image = [UIImage imageNamed:imageName];
+
     }
+
     return cell;
 }
 
@@ -102,7 +119,9 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0 && indexPath.row == 0) {
-        return 100;
+        
+        _headView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
+        return 200;
     }else{
         return 44;
     }
@@ -120,6 +139,9 @@
     } else if (indexPath.section == 0 && indexPath.row == 1) {
         RegistVC *regist = [[RegistVC alloc] init];
         [self.tabBarController.navigationController pushViewController:regist animated:YES];
+        
+       
+        
     } else if (indexPath.section == 1 && indexPath.row == 0) {
         //查看物流
         
@@ -127,9 +149,11 @@
         //查看订单
         
     } else if (indexPath.section == 1 && indexPath.row == 2){
-        //我的优惠劵
+        //兑换
+        ShopVC *shop = [[ShopVC alloc]init];
+        [self.tabBarController.navigationController pushViewController:shop animated:YES];
         
-    } else if (indexPath.section == 1 && indexPath.row == 3){
+    } else if (indexPath.section == 2 && indexPath.row == 3){
         //我的收藏
         
     } else if (indexPath.section == 2 && indexPath.row == 0){
@@ -138,10 +162,15 @@
         //系统设置
         [AVUser logOut];
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NULL message:@"退出登录成功！" delegate:NULL cancelButtonTitle:@"确定" otherButtonTitles:NULL];
-        [alertView show];
+    [alertView show];
         [self loadDataSource];
         [self.tableView reloadData];
     }
 }
-
+- (void)viewWillAppear:(BOOL)animated
+{
+  //  [self.view removeFromSuperview];
+    [self loadDataSource];
+    //[self  setup];
+}
 @end

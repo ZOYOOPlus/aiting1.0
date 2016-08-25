@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ImageColorCell : UICollectionViewCell
+
 @property (nonatomic, copy) NSString *image;
+
 @end

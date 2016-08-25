@@ -18,4 +18,7 @@
 - (void)showProgressView:(NSString *)message;
 /// 取消加载转轮
 - (void)hidenProgress;
+
+
+
 @end

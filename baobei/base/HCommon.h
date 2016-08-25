@@ -10,7 +10,7 @@
 //                            _ooOoo_
 //                           o8888888o
 //                           88" . "88
-//                           (| -_- |)
+//                              (| -_- |)
 //                            O\ = /O
 //                        ____/`---'\____
 //                      .   ' \\| |// `.
@@ -36,6 +36,9 @@
 #define AT_BANNER @"Banner"
 #define AT_SPEAKPHOTO   @"SpeakPhoto"
 #define AT_GOODSPHOTO   @"GoodsPhoto"
+#define fDeviceWidth ([UIScreen mainScreen].bounds.size.width)
+#define fDeviceHeight ([UIScreen mainScreen].bounds.size.height)
+#define kItemWidthHeigthScale 1.2  //长宽比
 #import <AVOSCloud/AVOSCloud.h>
 #import <DateTools/DateTools.h>
 #import <MJRefresh/MJRefresh.h>
@@ -52,7 +55,7 @@
 //#import <IDMPhotoBrowser/IDMPhoto.h>
 #import <IDMPhotoBrowser/IDMPhotoBrowser.h>
 #import <NAKPlaybackIndicatorView/NAKPlaybackIndicatorView.h>
-
+#import <AFNetworking/AFNetworking.h>
 #import "UIView+Extension.h"
 #import "UIColor+Hex.h"
 

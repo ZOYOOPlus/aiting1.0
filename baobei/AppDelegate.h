@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <RealReachability.h>
+#import "HCommon.h"
+
+@class ViewController;
 
 
 
@@ -16,6 +18,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+- (BOOL)joinGroup:(NSString *)groupUin key:(NSString *)key;
+   
 
 @end
 

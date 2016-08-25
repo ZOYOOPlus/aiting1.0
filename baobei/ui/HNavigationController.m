@@ -19,10 +19,13 @@
     if (self == [HNavigationController class]) {
         NSMutableDictionary *titleTextAttrs = [NSMutableDictionary dictionary];
         titleTextAttrs[NSForegroundColorAttributeName] = [UIColor colorWithRed:0.4 green:0.13 blue:0 alpha:1];
-        titleTextAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:18];
+        titleTextAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:25];
 
         UINavigationBar *bar = [UINavigationBar appearance];
-        UIImage * image = [HUtil createImageWithColor:[UIColor colorWithHexString:@"#FFDA1F"]];
+      //  UIImage * image = [HUtil createImageWithColor:[UIColor colorWithHexString:@"#FF6600"]];
+        // 255 228  77  黄
+        UIImage * image = [HUtil createImageWithColor:[UIColor colorWithRed:255.0/255.0 green:228.0/255.0 blue:77.0/255.0 alpha:1]];
+       // #FF6600
         [bar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
         [bar setShadowImage: [[UIImage alloc] init]];
         [bar setTitleTextAttributes:titleTextAttrs];

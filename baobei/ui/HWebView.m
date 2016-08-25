@@ -21,6 +21,8 @@
 @implementation HWebView
 
 
+
+
 - (instancetype)initWithURLString:(NSString *)url
 {
     self = [super init];
@@ -39,6 +41,7 @@
     }
     return self;
 }
+
 
 - (void)commonInit{
     self.navigationItem.leftBarButtonItems = @[self.goBack];
@@ -124,7 +127,6 @@
         WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
         configuration.preferences = [WKPreferences new];
         configuration.userContentController = [[WKUserContentController alloc] init];
-        
         configuration.allowsInlineMediaPlayback = YES; //容许音乐后台播放
         configuration.requiresUserActionForMediaPlayback = NO; // 音乐可以自动播放
         configuration.allowsPictureInPictureMediaPlayback = YES;
@@ -133,7 +135,7 @@
         _webView.backgroundColor = [UIColor clearColor];
         _webView.UIDelegate = self;
         _webView.navigationDelegate = self;
-//        _webView.allowsBackForwardNavigationGestures = YES;
+//     _webView.allowsBackForwardNavigationGestures = YES;
     }
     return _webView;
 }

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HCommon.h"
+#import "BaseVC.h"
 
 #define kItemWidthHeigthScale 1.2  //长宽比
 

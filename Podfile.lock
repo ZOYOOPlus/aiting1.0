@@ -1,4 +1,5 @@
 PODS:
+  - ActionSheetPicker (1.6.2)
   - AFNetworking (3.1.0):
     - AFNetworking/NSURLSession (= 3.1.0)
     - AFNetworking/Reachability (= 3.1.0)
@@ -15,6 +16,7 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - AVOSCloud (3.1.6.2)
+  - BFKit (1.9.2)
   - ContextMenu.iOS (1.1.0)
   - DACircularProgress (2.3.1)
   - DateTools (1.5.0)
@@ -71,8 +73,10 @@ PODS:
   - ZipArchive (1.4.0)
 
 DEPENDENCIES:
+  - ActionSheetPicker
   - AFNetworking (~> 3.0)
   - AVOSCloud (= 3.1.6.2)
+  - BFKit
   - ContextMenu.iOS (~> 1.1.0)
   - DateTools (= 1.5.0)
   - DOUAudioStreamer
@@ -110,8 +114,10 @@ CHECKOUT OPTIONS:
     :git: https://github.com/xhzengAIB/PlayerKit
 
 SPEC CHECKSUMS:
+  ActionSheetPicker: cc5255a36aabaf34245b97a478059d26bac8cd84
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   AVOSCloud: a3cd4fd18e2eba50de63c490cbd59fd8892fddee
+  BFKit: c8f1a85a04f8d350089da8693806a472d475d1f8
   ContextMenu.iOS: 7f3b63915e660f51aada2c4285c40a837b2c9737
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
   DateTools: b93a2c2017747329c6077c7d7e8a75106e23d0d7

@@ -16,14 +16,13 @@ static NSString *cellID = @"adsCell";
 
 + (CGFloat)contentHeight{
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    return screenWidth/kRowDisplayNum * kAspectRatio + 20;
-}
+    return screenWidth/kRowDisplayNum * kAspectRatio + 20;}
 
 + (UICollectionViewFlowLayout *)getFlowLayout{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
 //    CGFloat itemWidth = [[self class] contentHeight];
-    flowLayout.itemSize = CGSizeMake(screenWidth/kRowDisplayNum + 17, [[self class] contentHeight] - 20);
+    flowLayout.itemSize = CGSizeMake(screenWidth/kRowDisplayNum + 17, [[self class] contentHeight] -22);
     flowLayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
     flowLayout.minimumLineSpacing = 10;
     flowLayout.minimumInteritemSpacing = 0;

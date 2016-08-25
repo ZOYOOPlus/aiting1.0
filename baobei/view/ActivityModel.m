@@ -14,21 +14,9 @@
     self.publisDate = [NSDate dateWithTimeIntervalSince1970:timestamp];
 }
 
-
-
-
 - (instancetype)iniTWithDict:(NSDictionary *)dict{
-    
-//    ActivityModel *model= [[ActivityModel alloc]init];
-    
-//    model.title = Dict[@"title"];
-//    if (self = [[super alloc] init]) {
-    
-//    }
-//    if (self = [) {
-//        <#statements#>
-//    }
     [self setValuesForKeysWithDictionary:dict];
+    
     return self;
 }
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key{

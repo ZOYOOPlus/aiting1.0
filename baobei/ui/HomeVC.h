@@ -16,5 +16,5 @@ static CGFloat kHeadHeight = 30.f;
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UICollectionView * collectionView;
-
+@property (nonatomic,strong)  SDCycleScrollView *banner;
 @end

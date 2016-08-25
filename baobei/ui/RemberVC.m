@@ -15,6 +15,8 @@
 @property (nonatomic,strong) UITextField *codeTextField;
 @property (nonatomic,strong) UITextField *pwdTextField;
 @property (nonatomic,strong) UITextField *pwdTextField2;
+@property  (nonatomic,strong) UIView  *passLine;
+@property (nonatomic,strong) UIView *passLine2;
 
 
 @end
@@ -31,11 +33,30 @@
     _nestButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_nestButton setBackgroundColor:[UIColor  orangeColor]];
     [_nestButton setTitle:@"下一步" forState:(UIControlStateNormal)];
+    _nestButton.layer.borderWidth=1.0f;
+    _nestButton.layer.cornerRadius=15.0f;
+    _nestButton.layer.masksToBounds=YES;
+    _nestButton.layer.borderColor = [[UIColor  orangeColor]CGColor];
     [_nestButton addTarget:self action:@selector(clickRegistButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_nestButton];
     
+    
+    _passLine = [[UIView alloc]init];
+    _passLine.backgroundColor = [UIColor colorWithRed:246/255.0 green:246/255.0 blue:246/255.0 alpha:1];
+    [self.view addSubview:_passLine];
+    _passLine2 = [[UIView alloc]init];
+    _passLine2.backgroundColor = [UIColor colorWithRed:246/255.0 green:246/255.0 blue:246/255.0 alpha:1];
+    [self.view addSubview:_passLine2];
+    
+    
     _codeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [_codeButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+     [_codeButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    _codeButton.layer.borderWidth=1.0f;
+    _codeButton.layer.cornerRadius=10.0f;
+    _codeButton.layer.masksToBounds=YES;
+    _codeButton.layer.borderColor = [[UIColor  orangeColor]CGColor];
+    
     [_codeButton addTarget:self action:@selector(getCodeButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_codeButton];
     
@@ -43,7 +64,11 @@
     _phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
     _phoneTextField.textColor = [UIColor blackColor];
     _phoneTextField.delegate = self;
-    _phoneTextField.placeholder = @"📱请输入您的手机号";
+    _phoneTextField.placeholder = @"请输入您的手机号";
+    _phoneTextField.layer.borderWidth=1.0f;
+    _phoneTextField.layer.cornerRadius=20.0f;
+    _phoneTextField.layer.masksToBounds=YES;
+    _phoneTextField.layer.borderColor = [[UIColor  whiteColor]CGColor];
     _phoneTextField.clearButtonMode = UITextFieldViewModeAlways;
     _phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:_phoneTextField];
@@ -52,43 +77,80 @@
     _codeTextField.borderStyle = UITextBorderStyleRoundedRect;
     _codeTextField.textColor = [UIColor blackColor];
     _codeTextField.delegate = self;
-    _codeTextField.placeholder = @"㊙️请输入短信验证码";
+    _codeTextField.placeholder = @"请输入短信验证码";
+    _codeTextField.layer.borderWidth=1.0f;
+    _codeTextField.layer.cornerRadius=10.0f;
+    _codeTextField.layer.masksToBounds=YES;
+    _codeTextField.layer.borderColor = [[UIColor  whiteColor]CGColor];
+    
+    _codeTextField.clearButtonMode = UITextFieldViewModeAlways;
     _codeTextField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:_codeTextField];
 
     
     [self.nestButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        
         make.centerX.equalTo(self.view.mas_centerX);
-        make.width.equalTo(self.view.mas_width).offset(-10);
-        make.height.mas_equalTo(60);
-        make.top.equalTo(self.view.mas_top).offset(160);
+        make.width.equalTo(self.view.mas_width).offset(-140);
+
+        make.height.mas_equalTo(40);
+        make.top.equalTo(self.codeButton.mas_bottom).offset(20);
     }];
     
     
     
     [self.phoneTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view.mas_centerX);
-        make.width.equalTo(self.view.mas_width).offset(-10);
-        make.height.mas_equalTo(60);
+        make.left.equalTo(self.view.mas_left).offset(25);
+        make.width.equalTo(self.view.mas_width).offset(-50);
+        make.height.mas_equalTo(40);
         make.top.equalTo(self.view.mas_top).offset(20);
     }];
     
+    [self.passLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.equalTo(self.view.mas_width).offset(0);
+        make.height.mas_equalTo(2);
+        make.top.equalTo(self.view.mas_top).offset(20+40+2);
+    }];
+    if ([UIScreen mainScreen].bounds.size.width == 320) {
+        
     [_codeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(5);
+        make.left.equalTo(self.view.mas_left).offset(25);
         make.bottom.equalTo(self.phoneTextField.mas_bottom).offset(60);
-        make.size.mas_equalTo(CGSizeMake(200, 60));
+        make.size.mas_equalTo(CGSizeMake(180, 40));
+    }];
+        
+        [_codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view.mas_left).offset(220);
+            make.bottom.equalTo(self.phoneTextField.mas_bottom).offset(53);
+            make.size.mas_equalTo(CGSizeMake(90, 30));
+        }];
+    }else{
+        [_codeTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view.mas_left).offset(25);
+            make.bottom.equalTo(self.phoneTextField.mas_bottom).offset(60);
+            make.size.mas_equalTo(CGSizeMake(220, 40));
+        }];
+    
+        [_codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view.mas_left).offset(220+20+20);
+            make.bottom.equalTo(self.phoneTextField.mas_bottom).offset(53);
+            make.size.mas_equalTo(CGSizeMake(90, 30));
+        }];
+    }
+    [self.passLine2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(0);
+        make.width.equalTo(self.view.mas_width).offset(0);
+        make.height.mas_equalTo(2);
+        make.top.equalTo(self.view.mas_top).offset(20+40+2+40+20);
     }];
     
-    [_codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(220);
-        make.bottom.equalTo(self.phoneTextField.mas_bottom).offset(60);
-        make.size.mas_equalTo(CGSizeMake(100, 60));
-    }];
+  
     
     [self.pwdTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
         make.width.equalTo(self.view.mas_width).offset(-10);
-        make.height.mas_equalTo(60);
+        make.height.mas_equalTo(40);
         make.top.equalTo(self.view.mas_top).offset(280);
     }];
     
@@ -198,10 +260,10 @@
     });
     dispatch_resume(_timer);
 }
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
+//- (BOOL)prefersStatusBarHidden
+//{
+//    return YES;
+//}
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [_phoneTextField resignFirstResponder];
     [_codeTextField resignFirstResponder];
@@ -216,6 +278,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.title = @"账号验证";
+     [_phoneTextField becomeFirstResponder];
     //    self.tabBarController.title = @"用户注册";
 }
 

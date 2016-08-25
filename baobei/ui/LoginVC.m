@@ -17,6 +17,8 @@
 
 @property (nonatomic,strong) UITextField *phoneTextField;
 @property (nonatomic,strong) UITextField *pwdTextField;
+@property  (nonatomic,strong) UIView  *passLine;  // 我是华丽的分割线
+@property  (nonatomic,strong) UIView  *passLine2;  // 我也是华丽的分割线
 
 @property (nonatomic,strong) UIImageView *imageView;
 @property (nonatomic,strong) UIButton *forgetButton;
@@ -25,6 +27,7 @@
 @property (nonatomic,strong)UIButton  *QQLogin;
 @property (nonatomic,strong)UIButton  *WeiXinLogin;
 @property (nonatomic,strong)UIButton  *SinaLogin;
+
 @end
 
 @implementation LoginVC
@@ -35,24 +38,27 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"登录";
     
+    
     [self setUp];
 }
 - (void)setUp{
     
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width * 0.4, 10, 100, 100)];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width * 0.35, 10, 100, 100)];
     
-    [imageView setImage:[UIImage imageNamed:@"yazi.png"]];
+    [imageView setImage:[UIImage imageNamed:@"01.png"]];
     
     [self.view  addSubview:imageView];
     
+ 
     _loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    _loginButton.backgroundColor = [UIColor colorWithRed:134.0/255.0 green:181.0/255.0 blue:247.0/255.0 alpha:1.0];
-   // _loginButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"登录6_06"]];
-
-    //[_loginButton setTitle:@"登录" forState:UIControlStateNormal];
-    [_loginButton  setBackgroundImage:[UIImage imageNamed:@"登录6_06.png"] forState:UIControlStateNormal] ;
+    [_loginButton setBackgroundColor:[UIColor  orangeColor]];
+    [_loginButton setTitle:@"登录" forState:(UIControlStateNormal)];
+    _loginButton.layer.borderWidth=1.0f;
+    _loginButton.layer.cornerRadius=15.0f;
+    _loginButton.layer.masksToBounds=YES;
+    _loginButton.layer.borderColor = [[UIColor  orangeColor]CGColor];
     [_loginButton addTarget:self action:@selector(clickLoginButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.loginButton];
+    [self.view addSubview:_loginButton];
     
     _forgetButton = [UIButton buttonWithType:UIButtonTypeCustom];
 
@@ -88,77 +94,147 @@
      [_SinaLogin  setBackgroundImage:[UIImage imageNamed:@"登录_07.png"] forState:UIControlStateNormal] ;
     
     [self.view addSubview:self.SinaLogin];
-    
 
-    
     _phoneTextField = [[UITextField alloc] init];
     _phoneTextField.borderStyle = UITextBorderStyleRoundedRect;
+    _phoneTextField.clearButtonMode = UITextFieldViewModeAlways;
     _phoneTextField.textColor = [UIColor blackColor];
+    // 更改需求  去掉原线  添加横线
+//    _phoneTextField.layer.cornerRadius=15.0f;
+//    _phoneTextField.layer.masksToBounds=YES;
+    _phoneTextField.layer.borderColor=[[UIColor whiteColor]CGColor];
+    _phoneTextField.layer.borderWidth= 1.0f;
     _phoneTextField.delegate = self;
     _phoneTextField.placeholder = @"请输入手机号";
     _phoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:_phoneTextField];
+    
+    
+#pragma mark // 我是华丽的分割线
+    _passLine = [[UIView alloc]init];
+    _passLine.backgroundColor = [UIColor colorWithRed:246/255.0 green:246/255.0 blue:246/255.0 alpha:1];
+    [self.view addSubview:_passLine];
+    
+    _passLine2 = [[UIView alloc]init];
+    _passLine2.backgroundColor = [UIColor colorWithRed:246/255.0 green:246/255.0 blue:246/255.0 alpha:1];
+    [self.view addSubview:_passLine2];
+    
+    
     _pwdTextField = [[UITextField alloc] init];
     _pwdTextField.borderStyle = UITextBorderStyleRoundedRect;
+    _pwdTextField.clearButtonMode = UITextFieldViewModeAlways;
     _pwdTextField.textColor = [UIColor blackColor];
     _pwdTextField.delegate = self;
     _pwdTextField.placeholder = @"请输入密码";
     _pwdTextField.secureTextEntry = true;
+    _pwdTextField.layer.cornerRadius=15.0f;
+    _pwdTextField.layer.masksToBounds=YES;
+    _pwdTextField.layer.borderColor=[[UIColor whiteColor]CGColor];
+    _pwdTextField.layer.borderWidth= 1.0f;
     [self.view addSubview:_pwdTextField];
     
+    if ([UIScreen mainScreen].bounds.size.width== 320){
+    [self.QQLogin mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(15);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-90);
+        make.size.mas_equalTo(CGSizeMake(70, 70));
+    }];
     
+    [self.WeiXinLogin mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_centerX).offset(-35);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-90);
+        make.size.mas_equalTo(CGSizeMake(70, 70));
+    }];
+    
+    [self.SinaLogin mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view.mas_right).offset(-15);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-90);
+        make.size.mas_equalTo(CGSizeMake(70, 70));
+    }];
+    
+    }else
+    {
+        
+        [self.QQLogin mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(15);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-150);
+        make.size.mas_equalTo(CGSizeMake(70, 70));
+    }];
+        
+        [self.WeiXinLogin mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view.mas_centerX).offset(-35);
+            make.bottom.equalTo(self.view.mas_bottom).offset(-150);
+            make.size.mas_equalTo(CGSizeMake(70, 70));
+        }];
+        
+        [self.SinaLogin mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(self.view.mas_right).offset(-15);
+            make.bottom.equalTo(self.view.mas_bottom).offset(-150);
+            make.size.mas_equalTo(CGSizeMake(70, 70));
+        }];
+        
+}
+
     [self.forgetButton mas_makeConstraints:^(MASConstraintMaker *make) {
        make.left.equalTo(self.view.mas_left).offset(30);
-        make.top.equalTo(self.view.mas_top).offset(360);
+        make.top.equalTo(self.loginButton.mas_bottom).offset(20);
         make.size.mas_equalTo(CGSizeMake(80, 40));
     }];
     
     [self.giftButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view.mas_right).offset(-30);
-        make.top.equalTo(self.view.mas_top).offset(360);
+        make.top.equalTo(self.loginButton.mas_bottom).offset(20);
          make.size.mas_equalTo(CGSizeMake(80, 40));
-    }];
-    
-    
-    [self.QQLogin mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(15);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-30);
-        make.size.mas_equalTo(CGSizeMake(80, 80));
-    }];
-    
-    [self.WeiXinLogin mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.QQLogin.mas_right).offset(60);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-30);
-        make.size.mas_equalTo(CGSizeMake(80, 80));
-    }];
-    
-    [self.SinaLogin mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_right).offset(-95);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-30);
-        make.size.mas_equalTo(CGSizeMake(80, 80));
     }];
     
     
     [self.loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
-        make.width.equalTo(self.view.mas_width).offset(-10);
-        make.height.mas_equalTo(60);
-        make.top.equalTo(self.view.mas_top).offset(300);
+        make.width.equalTo(self.view.mas_width).offset(-140);
+        make.height.mas_equalTo(40);
+        make.top.equalTo(self.pwdTextField.mas_bottom).offset(30);
     }];
 
     [self.phoneTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view.mas_centerX);
-        make.width.equalTo(self.view.mas_width).offset(-10);
-        make.height.mas_equalTo(60);
+        make.left.equalTo(self.view.mas_left).offset(20);
+        make.width.equalTo(self.view.mas_width).offset(-40);
+        make.height.mas_equalTo(40);
         make.top.equalTo(self.view.mas_top).offset(120);
     }];
-    [self.pwdTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view.mas_centerX);
-        make.width.equalTo(self.view.mas_width).offset(-10);
-        make.height.mas_equalTo(60);
-        make.top.equalTo(self.view.mas_top).offset(210);
+#pragma mark  分割线的frame
+    [self.passLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(1);
+        make.width.equalTo(self.view.mas_width).offset(1);
+        make.height.mas_equalTo(2);
+        make.top.equalTo(self.view.mas_top).offset(120+40+2);
     }];
+    
+    [self.pwdTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+           make.left.equalTo(self.view.mas_left).offset(20);
+        make.width.equalTo(self.view.mas_width).offset(-40);
+        make.height.mas_equalTo(40);
+        make.top.equalTo(self.phoneTextField.mas_bottom).offset(20);
+    }];
+    
+    [self.passLine2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(1);
+        make.width.equalTo(self.view.mas_width).offset(1);
+        make.height.mas_equalTo(2);
+        make.top.equalTo(self.view.mas_top).offset(120+40+2+40+20);
+    }];
+    
+    
 }
+
+//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+//{
+//    textField.layer.cornerRadius=8.0f;
+//    textField.layer.masksToBounds=YES;
+//    textField.layer.borderColor=[[UIColor orangeColor]CGColor];
+//    textField.layer.borderWidth= 1.0f;
+//    return YES;
+//}
+
 - (void)clickLogin:(id)sender{
     
     RegistVC *RVC = [[RegistVC alloc]init];
@@ -169,6 +245,7 @@
 - (void)clickRemberButton:(id)sender{
     RemberVC *RemVC = [[RemberVC alloc]init];
     [self.navigationController pushViewController:RemVC animated:YES];
+   // [self.navigationController popToViewController:RemVC animated:YES];
 }
 - (void)clickLoginButton:(id)sender{
     if (_phoneTextField.text.length <= 0) {
@@ -186,6 +263,9 @@
         [AVUser logInWithMobilePhoneNumberInBackground:_phoneTextField.text password:_pwdTextField.text block:^(AVUser *user, NSError *error) {
             if (error == NULL && user != NULL) {
                 [self.view setUserInteractionEnabled:YES];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NULL message:@"登录成功" delegate:NULL cancelButtonTitle:@"确定" otherButtonTitles:NULL];
+                [alertView show];
+                
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
                 [self.view setUserInteractionEnabled:YES];
@@ -194,14 +274,19 @@
                 [alertView show];
             }
         }];
+        
+      
     }
     
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
+
+//- (BOOL)prefersStatusBarHidden
+//{
+//    return YES;
+//}
+
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [_phoneTextField resignFirstResponder];
     [_pwdTextField resignFirstResponder];

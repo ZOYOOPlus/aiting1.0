@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'A745CEB293F41D052D70305C'
+               BlueprintIdentifier = '88D58FEC89C889761FA4073C'
                BlueprintName = 'PPSSignatureView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPPSSignatureView.a'>

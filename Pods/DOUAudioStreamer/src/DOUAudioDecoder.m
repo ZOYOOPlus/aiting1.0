@@ -134,7 +134,7 @@ typedef struct {
   AudioStreamBasicDescription inputFormat = [_playbackItem fileFormat];
 
   OSStatus status = AudioConverterNew(&inputFormat, &_outputFormat, &_audioConverter);
-    
+   
   if (status != noErr) {
     _audioConverter = NULL;
       

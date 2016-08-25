@@ -14,7 +14,6 @@
 static void *kStatusKVOKey = &kStatusKVOKey;
 static void *kDurationKVOKey = &kDurationKVOKey;
 static void *kCurrentTimeKVOKey = &kCurrentTimeKVOKey;
-
 static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 
 @interface ListenVC ()
@@ -25,6 +24,8 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 @property (nonatomic,strong) UILabel *durationLabel;
 @property (nonatomic,strong) UIImageView *playerView;
 @property (nonatomic,strong) UILabel *musicName;
+
+
 @end
 
 @implementation ListenVC
@@ -32,7 +33,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
+    // RGB 还可以这样
     self.view.backgroundColor = [UIColor colorWithRed:0.92 green:0.75 blue:0.41 alpha:1];
     
     [self setUp];
@@ -40,17 +41,19 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     
     if ([MusicManager shareInstance].status == DOUAudioStreamerIdle ||
         [MusicManager shareInstance].status == DOUAudioStreamerError ) {
-        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][0]];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
         [self updatemusicName];
         
         [[MusicManager shareInstance] playCurrentMusic];
         [self setPlayButtonPlaying:YES];
     }else if ([MusicManager shareInstance].status == DOUAudioStreamerFinished || [MusicManager shareInstance].status == DOUAudioStreamerPaused){
+        
         [self setPlayButtonPlaying:NO];
         [self updateCurrenTime];
         [self updateDuration];
         [self updatemusicName];
     }else{
+        
         [self setPlayButtonPlaying:YES];
         [self updateCurrenTime];
         [self updateDuration];
@@ -59,7 +62,6 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
     
 //    [[MusicManager shareInstance] playCurrentMusic];
 
-    
     [[MusicManager shareInstance] addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:kStatusKVOKey];
     [[MusicManager shareInstance] addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:kDurationKVOKey];
     [[MusicManager shareInstance] addObserver:self forKeyPath:@"currentTime" options:NSKeyValueObservingOptionNew context:kCurrentTimeKVOKey];
@@ -99,28 +101,31 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 
 - (UILabel *)currentTimeLabel{
     if (!_currentTimeLabel) {
+        
         _currentTimeLabel = [[UILabel alloc] init];
         _currentTimeLabel.textColor = [UIColor colorWithRed:0.98 green:0.98 blue:0.96 alpha:1];
         _currentTimeLabel.font = [UIFont systemFontOfSize:15];
-
         _currentTimeLabel.text = @"00:00";
+        
     }
     return _currentTimeLabel;
 }
 
 - (UISlider *)progressView{
     if (!_progressView) {
+        
         _progressView = [[UISlider alloc]init];
         _progressView.continuous = NO;
         _progressView.maximumTrackTintColor = [UIColor colorWithRed:0.95 green:0.83 blue:0.57 alpha:1];
         _progressView.minimumTrackTintColor = [UIColor whiteColor];
+        
     }
     return _progressView;
 }
 
 - (UIImageView *)playerView{
     if (!_playerView) {
-        _playerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fa.png"]];
+        _playerView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fa.jpg"]];
     }
     return _playerView;
 }
