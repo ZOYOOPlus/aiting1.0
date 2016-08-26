@@ -63,7 +63,7 @@ static  NSString  *ceiiid = @"LookCollectionViewCell";
     self.tabBarController.navigationItem.title = @"成长空间";
 #pragma mark  设置tableBar 的字体大小 颜色 背景图片
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0 green:0.2 blue:0.4 alpha:1];
-    NSDictionary *dic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:18.f], NSForegroundColorAttributeName:[UIColor blackColor]};
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:18.f], NSForegroundColorAttributeName:[UIColor colorWithRed:90/255.0 green:38/255.0 blue:11/255.0 alpha:1]};//90 38 11
     self.navigationController.navigationBar.titleTextAttributes = dic;
     
 //
@@ -160,6 +160,7 @@ static  NSString  *ceiiid = @"LookCollectionViewCell";
     UIBarButtonItem *item = [[UIBarButtonItem alloc]  initWithTitle:@"锁" style:UIBarButtonItemStylePlain target:self action:@selector(clickLock)];
     
     self.tabBarController.navigationItem.rightBarButtonItem = item;
+    [MobClick beginLogPageView:@"LearnVC"];
 //    if ((_BookSlectBtn.tag ==1)) {
 //        
 //        [self selectAdsAtIndex:2];
@@ -175,6 +176,7 @@ static  NSString  *ceiiid = @"LookCollectionViewCell";
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.tabBarController.navigationItem.rightBarButtonItem = nil;
+    
 //    if ((_BookSlectBtn.tag  ==1)) {
 // 
 //        [self selectAdsAtIndex:2];

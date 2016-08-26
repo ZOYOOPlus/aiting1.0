@@ -40,7 +40,7 @@ static NSString *cellID = @"HImageListCell";
 - (void)viewDidLoad{
     [super viewDidLoad];
    self.tabBarController.navigationItem.title = @"梦想秀场";
-    [self addHeadView];
+  //  [self addHeadView];
     
     UIButton *btn = [self.view viewWithTag:101];
     
@@ -65,10 +65,21 @@ static NSString *cellID = @"HImageListCell";
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    
+    
     [super viewWillAppear:animated];
-   self.tabBarController.navigationItem.title = @"梦想秀场";
+    
+     UIBarButtonItem *item = [[UIBarButtonItem alloc]  initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(clickLock)];
+     self.tabBarController.navigationItem.rightBarButtonItem = item;
+    
+     self.tabBarController.navigationItem.title = @"梦想秀场";
 }
 
+
+-(void)clickLock{
+        
+        NSLog(@"锁住了");
+}
 - (void)addHeadView{
     // 2ge button
     NSArray *titleArray = @[@"小能手",@"小主播"];
@@ -116,7 +127,7 @@ static NSString *cellID = @"HImageListCell";
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         layout.sectionInset = UIEdgeInsetsMake(10, 10, 66, 10);
         
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 66, self.view.frame.size.width, self.view.frame.size.height - 66 ) collectionViewLayout:layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 66 ) collectionViewLayout:layout];
         [_collectionView registerClass:[ShowCell class] forCellWithReuseIdentifier:cellID];
         
         [_collectionView setDelegate:self];
@@ -154,9 +165,9 @@ static NSString *cellID = @"HImageListCell";
     NSInteger count;
     switch (self.selectType) {
         case 1:
-            return self.photoArray.count;
+            return  self.photoArray.count;
             return  self.nameArry.count;
-            return self.zanArray.count;
+            return  self.zanArray.count;
             break;
         case 2:
             count = 16;

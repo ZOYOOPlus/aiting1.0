@@ -30,7 +30,7 @@
     if (self) {
      //   [self addChildVC:[[HomeVC alloc] init] title:@"首" image:@"tabbar_home" selectImage:@"tabbar_home_high"];
   //      [self addChildVC:[[LearnVC alloc] init] title:@"学" image:@"tabbar_show" selectImage:@"tabbar_show_high"];
-       [self addChildVC:[[LearnVC alloc] init] title:@"学" image:@"tabbar_me" selectImage:@"tabbar_me_high"];       
+       [self addChildVC:[[LearnVC alloc] init] title:@"听" image:@"tabbar_me" selectImage:@"tabbar_me_high"];
         [self addChildVC:[[ShowVC alloc] init] title:@"秀" image:@"eye_c1" selectImage:@"eye"];
         [self addChildVC:[[NewsVC alloc] init] title:@"聊" image:@"tabbar_sh" selectImage:@"tabbar_sh_high"];
         [self addChildVC:[[PensonVC alloc] init] title:@"我" image:@"tabbar_show" selectImage:@"tabbar_show_high"];

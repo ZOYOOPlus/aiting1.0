@@ -57,8 +57,6 @@ static void * kContentOffSet = &kContentOffSet;
         _banner.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
         _banner.autoScrollTimeInterval = 3.5f;
         _banner.delegate = self;
-        
-        
     }
     return _banner;
 }
@@ -382,7 +380,9 @@ static void * kContentOffSet = &kContentOffSet;
             [self.tabBarController.navigationController pushViewController:webView animated:YES];
         }
     }];
-     }
+    
+}
+
 - (void)dealloc
 {
     [[AFNetworkReachabilityManager sharedManager] stopMonitoring];

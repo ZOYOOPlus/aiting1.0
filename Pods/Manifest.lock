@@ -63,6 +63,7 @@ PODS:
   - SSKeychain (1.4.0)
   - TGCameraViewController (2.2.2)
   - TTTAttributedLabel (1.13.4)
+  - UMengAnalytics (4.1.0)
   - YYCache (1.0.3)
   - YYImage (1.0.1):
     - YYImage/Core (= 1.0.1)
@@ -101,6 +102,7 @@ DEPENDENCIES:
   - SSKeychain
   - TGCameraViewController
   - TTTAttributedLabel (= 1.13.4)
+  - UMengAnalytics
   - YYWebImage
   - ZipArchive
 
@@ -143,6 +145,7 @@ SPEC CHECKSUMS:
   SSKeychain: c71293fa57216a40ab06c23f4085387583293de4
   TGCameraViewController: 010082bae689f3940b132b310b44e4ddc5a4f8e4
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
+  UMengAnalytics: 19b28253793d77dff10fb7d502faad1fb6b8ce4a
   YYCache: 282f35b5b0990833d0b7a06d864a87141a021da2
   YYImage: b41b45bc5f32bfcdf67bdfb9c09da9e9832357c0
   YYWebImage: 8da75a611fd0d2e0f58a273f9ca0bc731614cb0d

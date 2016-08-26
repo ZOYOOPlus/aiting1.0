@@ -32,7 +32,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//  [NSThread sleepForTimeInterval:1.0];
+
   
    [self.window makeKeyAndVisible];
 
@@ -64,12 +64,16 @@
 
     [AVOSCloud setApplicationId:@"uRSvH8HwoIE9EwXOaUFl4Pci-gzGzoHsz" clientKey:@"lAosTcRn5iwp5QOfsHMszrme"];
     
-    
-
-    
     TYAdViewController *mainVC= [[TYAdViewController alloc]init];
     self.window.rootViewController = mainVC;
 
+#pragma mark ----友盟----
+    
+    UMConfigInstance.appKey = @"57bebe96e0f55a69e80006d8";
+    UMConfigInstance.channelId = @"App Store";
+//    UMConfigInstance.eSType = E_UM_NORMAL;
+    [MobClick startWithConfigure:UMConfigInstance];
+    
 //    HTabBarController *tab = [[HTabBarController alloc] init];
 //    HNavigationController *nv = [[HNavigationController alloc] initWithRootViewController:tab];
 //    self.window.rootViewController = nv;
@@ -155,6 +159,11 @@
         return YES;
     }
     else return NO;
+}
+
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

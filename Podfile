@@ -30,5 +30,6 @@ target ‘baobei’ do
     pod 'RealReachability'
     pod 'ActionSheetPicker'
   pod 'BFKit'
+	pod 'UMengAnalytics'
 
 end

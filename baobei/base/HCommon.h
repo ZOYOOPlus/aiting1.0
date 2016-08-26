@@ -58,7 +58,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "UIView+Extension.h"
 #import "UIColor+Hex.h"
-
+#import "UMMobClick/MobClick.h"
 #import "HMacros.h"
 #import "BaseVC.h"
 #import "HUtil.h"

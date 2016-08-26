@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '16416CDBF149C9CF7D01EA06'
+               BlueprintIdentifier = 'C37BA1BD26EA37422D069336'
                BlueprintName = 'JVFloatLabeledTextField'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libJVFloatLabeledTextField.a'>

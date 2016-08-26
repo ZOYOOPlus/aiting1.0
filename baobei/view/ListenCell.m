@@ -11,6 +11,7 @@
 #import "PlayerManager.h"
 #import "ListenData.h"
 #import "DataManager.h"
+#import "MusicManager.h"
 @implementation ListenCell
 
 //放大按钮的热区
@@ -273,82 +274,116 @@
     [self  runStar];
     [self initRecordSession];
     _play.selected = YES;
-    
-    [[PlayerManager defaultManager]stopPlay];
+    [[MusicManager shareInstance]stopCurrentMusic];
+  //  [[PlayerManager defaultManager]stopPlay];
     
     
     if( _play.tag == 0&&[_name.text isEqualToString:@"哄睡"]){
         _play.tag = 1;
-     // http://sc1.111ttt.com/2016/5/08/24/201241411421.mp3
-       // [[PlayerManager defaultManager] playingMusic:@"ABC.mp3"];
-     
-        NSURL *musicURL = [NSURL URLWithString:@" http://sc1.111ttt.com/2016/3/08/24/201241619297.mp3"];
-        [[PlayerManager defaultManager]playingMusic:[NSString stringWithFormat:@"%@",musicURL]];
+
+
         
+         [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
     }else if(_play.tag == 0&&[_name.text isEqualToString:@"80后"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"2015.mp3"];
+//        [[MusicManager shareInstance]stopCurrentMusic];
+//        [[PlayerManager defaultManager] playingMusic:@"2015.mp3"];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         _play.tag = 1;
         
     }else if(_play.tag == 0&&[_name.text isEqualToString:@"托马斯"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"ABC.mp3"];
+//        [[PlayerManager defaultManager] playingMusic:@"ABC.mp3"];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         
         _play.tag = 1;
     }else if(_play.tag == 0&&[_name.text isEqualToString:@"西游记"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+//        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         
         _play.tag = 1;
         
     }else if(_play.tag == 0&&[_name.text isEqualToString:@"双语"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+//        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         _play.tag = 1;
         
     }
     else if(_play.tag == 0&&[_name.text isEqualToString:@"童话故事"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+//        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         _play.tag = 1;
     }
     else if(_play.tag == 0&&[_name.text isEqualToString:@"故事"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+//        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         
         _play.tag = 1;
         
     }
     else if(_play.tag == 0&&[_name.text isEqualToString:@"想象力"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+//        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
         
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         _play.tag = 1;
         
     }
     else if(_play.tag == 0&&[_name.text isEqualToString:@"记忆力"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+//        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         _play.tag = 1;
         
     }
     else if(_play.tag == 0&&[_name.text isEqualToString:@"逻辑思维"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+//        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         
         _play.tag = 1;
         
     }
     else if(_play.tag == 0&&[_name.text isEqualToString:@"西游记"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+//        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         
         _play.tag = 1;
         
     }
     else if(_play.tag == 0&&[_name.text isEqualToString:@"情感发展"]){
         
-        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+//        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] playCurrentMusic];
+
         
         _play.tag = 1;
         
@@ -365,7 +400,8 @@
         [self.delegate cellStopAnimation];
     }
     
-    [[PlayerManager defaultManager]stopPlay];
+//    [[PlayerManager defaultManager]stopPlay];
+    [[MusicManager shareInstance]stopCurrentMusic];
     [self stopAnimation];
     [self runstop];
     [_musicView setHidden:YES];
@@ -442,6 +478,7 @@
     if (_play.tag == 1) {
         
         [[PlayerManager defaultManager]stopPlay];
+        
         [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
         [_play setImage:[UIImage imageNamed:@"kai1"] forState:UIControlStateNormal];
         [self startAnimation];

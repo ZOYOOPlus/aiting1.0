@@ -7,6 +7,7 @@
 //
 
 #import "BaseVC.h"
+#import "HCommon.h"
 
 @interface NewsVC : BaseVC
 

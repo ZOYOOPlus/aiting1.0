@@ -13,22 +13,26 @@
 #import "DianzanVC.h"
 #import "liuyanVC.h"
 #import "VIPVC.h"
+#import "BannerDao.h"
+#import "BannerPhotoModel.h"
+#import "BannerCell.h"
+#import "HWebView.h"
+#define AT_BANNER @"Banner"
 #define fDeviceWidth ([UIScreen mainScreen].bounds.size.width)
 #define fDeviceHeight ([UIScreen mainScreen].bounds.size.height)
 
 static float AD_height = 150;//广告栏高度
 
-@interface NewsVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface NewsVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,SDCycleScrollViewDelegate>
 @property (nonatomic, strong)UIButton  *aiteViewButton;
-
 @property (nonatomic,strong)UIImageView *aiteImage1;
 @property (nonatomic,strong)UIImageView *aiteImage2;
+
 @property (nonatomic,strong)UIView  *blackView1;
 @property  (nonatomic,strong)UILabel  *aitelabel1;
 @property  (nonatomic,strong)UILabel  *aitelabel2;
 
 @property  (nonatomic,strong)UIButton  *leavemesaageBtn;
-
 @property (nonatomic,strong)UIImageView *leaveImage1;
 @property (nonatomic,strong)UIImageView *leavemage2;
 @property (nonatomic,strong)UIView  *blackView2;
@@ -42,14 +46,14 @@ static float AD_height = 150;//广告栏高度
 @property (nonatomic,strong)UILabel  *zanLabel1;
 @property (nonatomic,strong )UILabel *zanLabel2;
 
-@property (nonatomic, strong) UICollectionView *collectionView;
 
+@property (nonatomic,strong)  SDCycleScrollView *banner;
+@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic,strong) NSArray *BannerPhontoArray;
 
 @end
 
 @implementation NewsVC
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -68,59 +72,124 @@ static float AD_height = 150;//广告栏高度
     [self setup];
     [self setup2];
     [self setup3];
-    
-    [self.view addSubview:self.collectionView];
-    
+   // [self.view addSubview:self.collectionView];
+    [self.view addSubview:self.banner];
+    [self addBanner];
+    [self getbannerMessage];
   
+    UIImageView *imageView = [[UIImageView  alloc]init];
+    [self.view addSubview:imageView];
+    imageView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.collectionView.bounds.size.height);
 }
+- (void)addBanner{
+    AVQuery* query = [AVQuery queryWithClassName:AT_BANNER];
+    [query orderByAscending:@"order"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error==NULL && objects!= NULL && objects.count > 0) {
+            
+            NSMutableArray *arrM = [NSMutableArray  arrayWithCapacity:42];
+            for (int i = 0; i < objects.count; i ++) {
+                AVFile* imageFile1 = [objects[i] objectForKey:@"BannerPhoto"];
+                NSString *bannerurl = [imageFile1 url];
+                [arrM addObject:bannerurl];
+            }
+            self.banner.imageURLStringsGroup = arrM;
+        }
+    }];
+}
+
 - (void)backVC{
     
         [self.navigationController popViewControllerAnimated:YES];
-
 }
+
 -(void)viewDidAppear:(BOOL)animated{
     [super viewWillAppear:animated];
           self.tabBarController.navigationItem.title = @"VIP任务";
-    //[self reloadInputViews];
 }
 
-#pragma mark - 创建collectionView并设置代理
-- (UICollectionView *)collectionView{
-    if (_collectionView == nil) {
-        
-        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        
-        flowLayout.headerReferenceSize = CGSizeMake(fDeviceWidth, AD_height+10);//头部大小
-        
-        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 210, fDeviceWidth,fDeviceHeight/2.6) collectionViewLayout:flowLayout];
-        
-        //定义每个UICollectionView 的大小
-        flowLayout.itemSize = CGSizeMake((fDeviceWidth-20)/2, (fDeviceWidth-20)/2+50);
-        //定义每个UICollectionView 横向的间距
-        flowLayout.minimumLineSpacing = 5;
-        //定义每个UICollectionView 纵向的间距
-        flowLayout.minimumInteritemSpacing = 0;
-        //定义每个UICollectionView 的边距距
-        flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 5, 5);//上左下右
-        
-        //注册cell和ReusableView（相当于头部）
-        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
-        [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ReusableView"];
-        //设置代理
-        _collectionView.delegate = self;
-        _collectionView.dataSource = self;
-        //背景颜色
-        _collectionView.backgroundColor = [UIColor clearColor];
-        //自适应大小
-        _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+#pragma mark --- 添加banner 图 的数据
+-(SDCycleScrollView *)banner{
+    
+    if (_banner == nil) {
+        _banner = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 150.0f) imageURLStringsGroup:nil];
+        _banner.placeholderImage = [UIImage imageNamed:@"head.jpg"];
+        _banner.backgroundColor = [UIColor blackColor];
+        _banner.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+        _banner.autoScrollTimeInterval = 3.5f;
+        _banner.delegate = self;
         
     }
-    return _collectionView;
+    return _banner;
 }
+
+- (void)getbannerMessage {
+    [self showProgressView:nil];
+    [ BannerDao getBannerPhotoWithUserId:nil sucess:^(NSArray *list) {
+        [self hidenProgress];
+        self.BannerPhontoArray = list;
+        [self.collectionView reloadData];
+    } fail:^{
+        [self hidenProgress];
+        [self showAlertView:@"提示" content:@"请求数据失败，请检查网络"];
+    }];
+}
+
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
+    
+    // 点击多次cell  只响应最后一次
+    AVQuery* query = [AVQuery queryWithClassName:AT_BANNER];
+    [query orderByAscending:@"order"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (![self.tabBarController.navigationController.childViewControllers.lastObject isKindOfClass:[HWebView class]]) {
+            NSString *bannerurl = [objects[index] objectForKey:@"Banner_URL"];
+            HWebView *webView = [[HWebView alloc] initWithURLString:bannerurl];
+            [self.tabBarController.navigationController pushViewController:webView animated:YES];
+            NSLog(@"%@",error);
+        }
+    }];
+    
+}
+
+
+//#pragma mark - 创建collectionView并设置代理
+//- (UICollectionView *)collectionView{
+//    if (_collectionView == nil) {
+//        
+//        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+//        
+//        flowLayout.headerReferenceSize = CGSizeMake(fDeviceWidth, AD_height+10);//头部大小
+//        
+//        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 210, fDeviceWidth,fDeviceHeight/2.6) collectionViewLayout:flowLayout];
+//        
+//        //定义每个UICollectionView 的大小
+//        flowLayout.itemSize = CGSizeMake((fDeviceWidth-20)/2, (fDeviceWidth-20)/2+50);
+//        //定义每个UICollectionView 横向的间距
+//        flowLayout.minimumLineSpacing = 5;
+//        //定义每个UICollectionView 纵向的间距
+//        flowLayout.minimumInteritemSpacing = 0;
+//        //定义每个UICollectionView 的边距距
+//        flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 5, 5);//上左下右
+//        
+//        //注册cell和ReusableView（相当于头部）
+//        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+//        [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ReusableView"];
+//        //设置代理
+//        _collectionView.delegate = self;
+//        _collectionView.dataSource = self;
+//        //背景颜色
+//        _collectionView.backgroundColor = [UIColor clearColor];
+//        //自适应大小
+//        _collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//        
+//    }
+//    return _collectionView;
+//}
 
 -(void)setup{
     
-    _aiteViewButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 70)];
+    // 官方任务 button frame
+    _aiteViewButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 150, self.view.bounds.size.width, 70)];
     _aiteViewButton.backgroundColor = [UIColor whiteColor];
     [self.view addSubview: _aiteViewButton];
     [_aiteViewButton addTarget:self action:@selector(newsClick) forControlEvents:UIControlEventTouchUpInside];
@@ -131,57 +200,50 @@ static float AD_height = 150;//广告栏高度
     _aiteImage2 = [[UIImageView alloc]init];
     _aiteImage2.image = [UIImage imageNamed:@"消息7_13_03.png"];
     [self.view addSubview:_aiteImage2];
+    
+    
     _aitelabel1 = [[UILabel alloc]init];
     _aitelabel1.text = @"官方任务";
     _aitelabel1.textColor = [UIColor orangeColor];
-  //  [_aitelabel1 setTintColor:[UIColor orangeColor]];
+
     [self.view addSubview:_aitelabel1];
-    _aitelabel2 = [[UILabel alloc]init];
-  //  _aitelabel2.text = @"开通会员更多优惠";
-    [self.view addSubview:_aitelabel2];
-    _blackView1 = [[UIView alloc]init];
-    _blackView1.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:238.0/255.0 blue:239.0/255.0 alpha:1];
-    [self.view  addSubview:_blackView1];
     
     
+//    _aitelabel2 = [[UILabel alloc]init];
+//
+//    [self.view addSubview:_aitelabel2];
+//    _blackView1 = [[UIView alloc]init];
+//    _blackView1.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:238.0/255.0 blue:239.0/255.0 alpha:1];
+//    [self.view  addSubview:_blackView1];
+    
+    // 头像
     [_aiteImage1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(8);
-        make.bottom.equalTo(self.view.mas_top).offset(64);
+        make.bottom.equalTo(self.view.mas_top).offset(214);
         make.size.mas_equalTo(CGSizeMake(60, 60));
     }];
+    // 箭头1
     [_aiteImage2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view.mas_right).offset(-20);
-        make.bottom.equalTo(self.view.mas_top).offset(44);
+        make.bottom.equalTo(self.view.mas_top).offset(188);
         make.size.mas_equalTo(CGSizeMake(12, 12));
     }];
     
+    // 官方任务
     [_aitelabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.aiteImage1.mas_right).offset(20);
-        make.top.equalTo(self.view.mas_top).offset(20);
+        make.left.equalTo(self.view.mas_left).offset(80);
+        make.top.equalTo(self.view.mas_top).offset(174);
         make.size.mas_equalTo(CGSizeMake(100, 18));
-        NSLog(@"label1");
+       
         
     }];
     
-    [_aitelabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.aiteImage1.mas_right).offset(20);
-        make.top.equalTo(self.view.mas_top).offset(40);
-        make.size.mas_equalTo(CGSizeMake(150, 18));
-        
-    }];
-    
-    [_blackView1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).offset(2);
-         make.top.equalTo(self.aiteImage1.mas_bottom).offset(5);
-        make.size.mas_equalTo(CGSizeMake(self.view.bounds.size.width, 10));
-        
-    }];
 }
 
 
 -(void)setup2{
-    
-    _leavemesaageBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width, 70)];
+    // 留言的frame
+    _leavemesaageBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 70+150+2, self.view.bounds.size.width, 70)];
     _leavemesaageBtn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview: _leavemesaageBtn];
     [_leavemesaageBtn addTarget:self action:@selector(newsClick2) forControlEvents:UIControlEventTouchUpInside];
@@ -191,47 +253,43 @@ static float AD_height = 150;//广告栏高度
     _leavemage2 = [[UIImageView alloc]init];
     _leavemage2.image = [UIImage imageNamed:@"消息7_13_03.png"];
     [self.view addSubview:_leavemage2];
+    
+ 
+    
     _leaveLabel1 = [[UILabel alloc]init];
     _leaveLabel1.text = @"留言";
     _leaveLabel1.textColor = [UIColor orangeColor];
-    [self.view addSubview:_leaveLabel1];
-    _leaveLabel2 = [[UILabel alloc]init];
-    //_leaveLabel2.text = @"开通会员更多优惠";
-    [self.view addSubview:_leaveLabel2];
-    _blackView2 = [[UIView alloc]init];
-    _blackView2.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:238.0/255.0 blue:239.0/255.0 alpha:1];
-  //  _blackView2.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:_blackView2];
     
+    [self.view addSubview:_leaveLabel1];
+    
+    
+//    _leaveLabel2 = [[UILabel alloc]init];
+//    //_leaveLabel2.text = @"开通会员更多优惠";
+//    [self.view addSubview:_leaveLabel2];
+//    _blackView2 = [[UIView alloc]init];
+//    _blackView2.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:238.0/255.0 blue:239.0/255.0 alpha:1];
+//  //  _blackView2.backgroundColor = [UIColor blackColor];
+//    [self.view addSubview:_blackView2];
+    
+    // 留言的 图片
     [_leaveImage1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(8);
-        make.top.equalTo(self.view.mas_top).offset(self.aiteViewButton.height+5);
+        make.top.equalTo(self.view.mas_top).offset(232-7);
         make.size.mas_equalTo(CGSizeMake(60, 60));
     }];
+    //  箭头2
     [_leavemage2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view.mas_right).offset(-20);
-       make.top.equalTo(self.view.mas_top).offset(self.aiteViewButton.height+35);        make.size.mas_equalTo(CGSizeMake(12, 12));
+       make.top.equalTo(self.view.mas_top).offset(232+20);
+        make.size.mas_equalTo(CGSizeMake(12, 12));
     }];
+     // 留言 的文字
+  
     
     [_leaveLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.leaveImage1.mas_right).offset(20);
-        make.bottom.equalTo(self.blackView2.mas_top).offset(-25);
+        make.left.equalTo(self.view.mas_left).offset(80);
+        make.top.equalTo(self.view.mas_top).offset(232+15);
         make.size.mas_equalTo(CGSizeMake(100, 18));
-        NSLog(@"label1");
-    }];
-    [_leaveLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.leaveImage1.mas_right).offset(20);
-        make.top.equalTo(self.blackView1.mas_top).offset(40);
-         //make.top.equalTo(self.blackView2.mas_top).offset(20);
-        make.size.mas_equalTo(CGSizeMake(150, 18));
-    
-    }];
- 
-    [_blackView2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).offset(2);
-          make.top.equalTo(self.leaveImage1.mas_bottom).offset(5);
-        make.size.mas_equalTo(CGSizeMake(self.view.bounds.size.width, 5));
-        
     }];
 
 }
@@ -239,8 +297,8 @@ static float AD_height = 150;//广告栏高度
 
 
 -(void)setup3{
-    
-    _zanViewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 142, self.view.bounds.size.width, 70)];
+    //
+    _zanViewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 222+72, self.view.bounds.size.width, 70)];
     _zanViewBtn.backgroundColor = [UIColor whiteColor];
  
     [self.view addSubview: _zanViewBtn];
@@ -256,52 +314,43 @@ static float AD_height = 150;//广告栏高度
     _zanLabel1.textColor = [UIColor  orangeColor];
     [_zanLabel1 setTintColor:[UIColor orangeColor]];
     [self.view addSubview:_zanLabel1];
-    _zanLabel2 = [[UILabel alloc]init];
- //   _zanLabel2.text = @"开通会员更多优惠";
-    [self.view addSubview:_zanLabel2];
-    _blackView3 = [[UIView alloc]init];
-    _blackView3.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:238.0/255.0 blue:239.0/255.0 alpha:1];
-    [self.view  addSubview:_blackView3];
+//    _zanLabel2 = [[UILabel alloc]init];
+// //   _zanLabel2.text = @"开通会员更多优惠";
+//    [self.view addSubview:_zanLabel2];
+//    _blackView3 = [[UIView alloc]init];
+//    _blackView3.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:238.0/255.0 blue:239.0/255.0 alpha:1];
+//    [self.view  addSubview:_blackView3];
     
+    //点赞图片
+
     [_zanImage1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(8);
-        make.top.equalTo(self.blackView2.mas_top).offset(4);
+        make.top.equalTo(self.view.mas_top).offset(222+72+5);
         make.size.mas_equalTo(CGSizeMake(60, 60));
     }];
+    //箭头三
+
     [_zanmage2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.view.mas_right).offset(-20);
-       make.top.equalTo(self.blackView2.mas_bottom).offset(22);
+        make.top.equalTo(self.view.mas_top).offset(222+72+20+10);
         make.size.mas_equalTo(CGSizeMake(12, 12));
     }];
-    
+    //点赞的 信息
+
     [_zanLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.zanImage1.mas_right).offset(20);
-        make.top.equalTo(self.blackView2.mas_top).offset(20);
+        make.left.equalTo(self.view.mas_left).offset(80);
+        make.top.equalTo(self.view.mas_top).offset(222+72+15+10);
         make.size.mas_equalTo(CGSizeMake(100, 18));
-        NSLog(@"label1");
     }];
     
-    [_zanLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.leaveImage1.mas_right).offset(20);
-        make.top.equalTo(self.zanImage1.mas_top).offset(40);
-        make.size.mas_equalTo(CGSizeMake(150, 18));
-        
-    }];
-    
-    [_blackView3 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).offset(2);
-        make.top.equalTo(self.zanImage1.mas_bottom).offset(5);
-        make.size.mas_equalTo(CGSizeMake(self.view.bounds.size.width, 5));
-        
-    }];
+
 }
 -(void)newsClick{
     if([AVUser currentUser] == NULL){
     LoginVC *loVC = [[LoginVC  alloc]init];
     [self.navigationController pushViewController:loVC animated:YES];
     }else {
-//        XiaoxiNewsVC  *xiaoVC = [[XiaoxiNewsVC  alloc]init];
-//        [self.navigationController pushViewController:xiaoVC animated:YES];
+
         VIPVC  *vip = [[VIPVC  alloc]init];
         [self.navigationController pushViewController:vip animated:YES];
     }
@@ -360,10 +409,13 @@ static float AD_height = 150;//广告栏高度
     }
 - (void)viewWillAppear:(BOOL)animated
 {
-//    if([AVUser currentUser] == NULL){
-//        LoginVC *loVC = [[LoginVC  alloc]init];
-//        [self.navigationController pushViewController:loVC animated:YES];
-//    }else{
-//    }
+    [super viewWillAppear:animated];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]  initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(clickLock)];
+    self.tabBarController.navigationItem.rightBarButtonItem = item;
+}
+-(void)clickLock{
+    
+    NSLog(@"锁住了");
+    
 }
 @end

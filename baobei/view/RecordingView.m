@@ -92,6 +92,10 @@ static  NSString *cellID = @"IMG";
         //[self  imageQueryBook2];
         [self.collectionView reloadData];
         [self  setup];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(someMethod)
+                                                     name:UIApplicationDidEnterBackgroundNotification object:nil];
+        
         
     }
     return self;
@@ -192,7 +196,7 @@ static  NSString *cellID = @"IMG";
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor clearColor];
     }
-    return _collectionView;
+    return _collectionView;       
     
 }
 
@@ -200,6 +204,7 @@ static  NSString *cellID = @"IMG";
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"isRecording"];
     [self removeObserver:self forKeyPath:@"isPlaying"];
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -210,6 +215,7 @@ static  NSString *cellID = @"IMG";
 }
 
 #pragma mark      --------------录音的点击方法
+
 
 
 
@@ -668,19 +674,29 @@ static  NSString *cellID = @"IMG";
     selectType = selectType;
     
 }
-// 进入后台时 录音停止
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    [_recordBtn  setImage:[UIImage imageNamed:@"麦12.jpg"] forState:UIControlStateNormal];
-    [_recorder stop];
-    [self.recorder stop];
-}
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    [_recorder stop];
-    [_player  stop];
+#pragma mark     进入后台时 录音停止  方法没有走
+//- (void)applicationDidEnterBackground:(UIApplication *)application
+//{
+//    [_recordBtn  setImage:[UIImage imageNamed:@"麦12.jpg"] forState:UIControlStateNormal];
+//    [_recorder stop];
+//    [self.recorder stop];
+//    _timeout = 0;
+//    self.recorder = nil;
+//}
+
+- (void)someMethod{
     
+    [_recorder stop];
+    _timeout = 0;
+  
 }
+
+//- (void)applicationWillResignActive:(UIApplication *)application
+//{
+//    [_recorder stop];
+//    [_player  stop];
+//    
+//}
 
 #pragma  mark     定时器 录一分钟
 - (void)TimerStart{

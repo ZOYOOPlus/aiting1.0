@@ -47,7 +47,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
 - (void)removeStreamerObserver {
     [_streamer removeObserver:self forKeyPath:@"status"];
     [_streamer removeObserver:self forKeyPath:@"duration"];
-    [_streamer removeObserver:self forKeyPath:@"currentTime"];
+ //   [_streamer removeObserver:self forKeyPath:@"currentTime"];
     [_streamer removeObserver:self forKeyPath:@"bufferingRatio"];
 }
 
@@ -102,7 +102,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         _streamer = nil;
     }
 
-    self.status = DOUAudioStreamerIdle;
+       self.status = DOUAudioStreamerIdle;
 }
 
 - (void)updateCurrentTime:(id)timer{

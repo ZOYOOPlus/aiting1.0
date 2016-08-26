@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '6B5504C2F6AF4721F0F0BCAC'
+               BlueprintIdentifier = '03CD86CB5E52A28D11DC30E6'
                BlueprintName = 'NAKPlaybackIndicatorView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libNAKPlaybackIndicatorView.a'>

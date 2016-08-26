@@ -43,8 +43,8 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         [MusicManager shareInstance].status == DOUAudioStreamerError ) {
         [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
         [self updatemusicName];
-        
         [[MusicManager shareInstance] playCurrentMusic];
+        
         [self setPlayButtonPlaying:YES];
     }else if ([MusicManager shareInstance].status == DOUAudioStreamerFinished || [MusicManager shareInstance].status == DOUAudioStreamerPaused){
         

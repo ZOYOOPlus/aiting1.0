@@ -49,7 +49,7 @@ static NSString *cellID = @"HImageListCell";
    self.collectionView.backgroundColor = [UIColor clearColor];
   // self.demoImageView.backgroundColor = [UIColor whiteColor];
   // self.demoImageView2.backgroundColor = [UIColor whiteColor];
-    [self initadsView];
+  //  [self initadsView];
 //    [self addGoodsphoto];
     [self.view addSubview:self.collectionView];
     [self.view addSubview:self.demoImageView2];
@@ -127,7 +127,7 @@ static NSString *cellID = @"HImageListCell";
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         layout.sectionInset = UIEdgeInsetsMake(10, 10, 66, 10);
         
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 110, self.view.frame.size.width, self.view.frame.size.height -170) collectionViewLayout:layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -10) collectionViewLayout:layout];
         [_collectionView registerClass:[ShopCell class] forCellWithReuseIdentifier:cellID];
         
 //        _collectionView.layer.borderWidth = 5;

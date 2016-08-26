@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '406BD45EF61A39B4628AFF79'
+               BlueprintIdentifier = 'BE965676B4792B5D33570AC8'
                BlueprintName = 'BFKit'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libBFKit.a'>

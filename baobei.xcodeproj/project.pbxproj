@@ -87,12 +87,12 @@
 		C30C95FB1D46256D00633057 /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C30C95FA1D46256D00633057 /* UserCell.m */; };
 		C30E76F21D38BBFA003A988A /* creatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C30E76F01D38BBFA003A988A /* creatVC.m */; };
 		C30E76FC1D39C975003A988A /* CreatView.m in Sources */ = {isa = PBXBuildFile; fileRef = C30E76FB1D39C975003A988A /* CreatView.m */; };
+		C30F4B7F1D6FD8F600AE3BD2 /* NewsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C30F4B7E1D6FD8F600AE3BD2 /* NewsVC.m */; };
 		C30F5A0A1D6AD95B0000EFD3 /* Ad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C30F5A051D6AD95B0000EFD3 /* Ad.storyboard */; };
 		C30F5A0B1D6AD95B0000EFD3 /* TYAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C30F5A071D6AD95B0000EFD3 /* TYAdViewController.m */; };
 		C30F5A0C1D6AD95B0000EFD3 /* UIView+BDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = C30F5A091D6AD95B0000EFD3 /* UIView+BDExtension.m */; };
 		C30F5A0E1D6B29300000EFD3 /* 888.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C30F5A0D1D6B29300000EFD3 /* 888.jpg */; };
 		C30F5A101D6B2C400000EFD3 /* jm.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C30F5A0F1D6B2C400000EFD3 /* jm.jpg */; };
-		C313D26C1D34E4C9005C0AE2 /* NewsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C313D26B1D34E4C9005C0AE2 /* NewsVC.m */; };
 		C318B14A1D3F28DB00FE3881 /* CreateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C318B1491D3F28DB00FE3881 /* CreateCell.m */; };
 		C318B14D1D3F387800FE3881 /* PaintFullVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C318B14C1D3F387800FE3881 /* PaintFullVC.m */; };
 		C31988401D5979320064199B /* LookView.m in Sources */ = {isa = PBXBuildFile; fileRef = C319883F1D5979320064199B /* LookView.m */; };
@@ -599,6 +599,8 @@
 		C30E76F01D38BBFA003A988A /* creatVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = creatVC.m; path = ../creatVC.m; sourceTree = "<group>"; };
 		C30E76FA1D39C975003A988A /* CreatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreatView.h; path = ../CreatView.h; sourceTree = "<group>"; };
 		C30E76FB1D39C975003A988A /* CreatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreatView.m; path = ../CreatView.m; sourceTree = "<group>"; };
+		C30F4B7D1D6FD8F600AE3BD2 /* NewsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsVC.h; sourceTree = "<group>"; };
+		C30F4B7E1D6FD8F600AE3BD2 /* NewsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsVC.m; sourceTree = "<group>"; };
 		C30F5A051D6AD95B0000EFD3 /* Ad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Ad.storyboard; sourceTree = "<group>"; };
 		C30F5A061D6AD95B0000EFD3 /* TYAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYAdViewController.h; sourceTree = "<group>"; };
 		C30F5A071D6AD95B0000EFD3 /* TYAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYAdViewController.m; sourceTree = "<group>"; };
@@ -606,8 +608,6 @@
 		C30F5A091D6AD95B0000EFD3 /* UIView+BDExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BDExtension.m"; sourceTree = "<group>"; };
 		C30F5A0D1D6B29300000EFD3 /* 888.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 888.jpg; sourceTree = "<group>"; };
 		C30F5A0F1D6B2C400000EFD3 /* jm.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jm.jpg; sourceTree = "<group>"; };
-		C313D26A1D34E4C9005C0AE2 /* NewsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsVC.h; sourceTree = "<group>"; };
-		C313D26B1D34E4C9005C0AE2 /* NewsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsVC.m; sourceTree = "<group>"; };
 		C318B1481D3F28DB00FE3881 /* CreateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateCell.h; sourceTree = "<group>"; };
 		C318B1491D3F28DB00FE3881 /* CreateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateCell.m; sourceTree = "<group>"; };
 		C318B14B1D3F387800FE3881 /* PaintFullVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintFullVC.h; sourceTree = "<group>"; };
@@ -2016,8 +2016,8 @@
 		C357405E1D3C729D006C51E1 /* News */ = {
 			isa = PBXGroup;
 			children = (
-				C313D26A1D34E4C9005C0AE2 /* NewsVC.h */,
-				C313D26B1D34E4C9005C0AE2 /* NewsVC.m */,
+				C30F4B7D1D6FD8F600AE3BD2 /* NewsVC.h */,
+				C30F4B7E1D6FD8F600AE3BD2 /* NewsVC.m */,
 				C30C95D11D44C87600633057 /* XiaoxiNewsVC.h */,
 				C30C95D21D44C87600633057 /* XiaoxiNewsVC.m */,
 				C30C95D41D44D23200633057 /* liuyanVC.h */,
@@ -2641,7 +2641,6 @@
 				C30C95E91D45C5AA00633057 /* BookCell.m in Sources */,
 				C31988401D5979320064199B /* LookView.m in Sources */,
 				31496C5A1CCD01E700ECDB3A /* UIView+Extension.m in Sources */,
-				C313D26C1D34E4C9005C0AE2 /* NewsVC.m in Sources */,
 				315C20661CE86DD30099692B /* ActivityModel.m in Sources */,
 				315F1D1D1CCCF17B000785A3 /* AppDelegate.m in Sources */,
 				C306523B1D54381400286ECB /* LKLotteryView.m in Sources */,
@@ -2724,6 +2723,7 @@
 				C30C95D61D44D23200633057 /* liuyanVC.m in Sources */,
 				C318B14D1D3F387800FE3881 /* PaintFullVC.m in Sources */,
 				313DA2C41CCE50D30066A832 /* LearnVC.m in Sources */,
+				C30F4B7F1D6FD8F600AE3BD2 /* NewsVC.m in Sources */,
 				C323EC651D3E26CB004CEDE3 /* PaintPhotoModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

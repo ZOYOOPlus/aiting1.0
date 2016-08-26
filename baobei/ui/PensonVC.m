@@ -341,10 +341,13 @@
         
     } else if (indexPath.section == 1 && indexPath.row == 1){
         //兑换
-        
+        if([AVUser currentUser] == NULL){
+            LoginVC *loVC = [[LoginVC  alloc]init];
+            [self.navigationController pushViewController:loVC animated:YES];
+        }else{
         ShopVC *shop = [[ShopVC alloc]init];
         [self.tabBarController.navigationController pushViewController:shop animated:YES];
-        
+        }
         
     } else if (indexPath.section == 1 && indexPath.row == 2){
         //VIP 任务
