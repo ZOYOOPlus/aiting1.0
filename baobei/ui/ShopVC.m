@@ -28,7 +28,7 @@ static NSString *cellID = @"HImageListCell";
 @property (nonatomic,strong)  NSArray  *SellArray;
 @property (nonatomic ,strong) NSArray  *AddressArray;
 @property  (nonatomic,strong) NSArray  *NameArray;
-@property (nonatomic,strong) HWebView *webView;
+@property (nonatomic,strong)  HWebView *webView;
 @end
 
 @implementation ShopVC
@@ -154,8 +154,7 @@ static NSString *cellID = @"HImageListCell";
             if(![self.navigationController.childViewControllers.lastObject isKindOfClass:[HWebView class]]){
             NSString *GPURL = [objects[indexPath.row] objectForKey:@"GP_URL"];
                 if (GPURL == NULL){
-                
-                
+
                 }else{
             HWebView *webView = [[HWebView alloc] initWithURLString:GPURL];
             [self.navigationController pushViewController:webView animated:YES];
@@ -169,7 +168,10 @@ static NSString *cellID = @"HImageListCell";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return self.photoArray.count;
     return self.PriceArray.count;
+
+
     return self.SellArray.count;
+  
     return self.NameArray.count;
     return self.AddressArray.count;
     
@@ -185,7 +187,7 @@ static NSString *cellID = @"HImageListCell";
     cell.goodsName.text = self.NameArray [indexPath.row];
     cell.shopPhotoMode = self.photoArray[indexPath.row];
     
-    //cell.selected = NO;
+    
     
     return cell;
 }

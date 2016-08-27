@@ -461,27 +461,43 @@ static DataManager *_dataManager;
     NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:1];
     {
         MusicData  *data = [[MusicData alloc] init];
-        data.musicURL = @"http://audio.xmcdn.com/group13/M05/6E/84/wKgDXVc7N33ST3ZuAFIFIhmC6ac098.m4a";
-        //data.musicURL = @"http://sc1.111ttt.com/2016/1/08/26/201261124206.mp3";
-        data.name = @"智慧听";
+//        data.musicURL = @"http://audio.xmcdn.com/group13/M05/6E/84/wKgDXVc7N33ST3ZuAFIFIhmC6ac098.m4a";
+        data.musicURL = @"http://audio.xmcdn.com/group13/M03/49/F8/wKgDXVWtrdiDf2bOABFbNa2OJx0775.m4a";
         data.musicPic = @"test.jpg";
         data.artistName = @"凯叔";
         [array addObject:data];
     }
+    
 // http://audio.xmcdn.com/group13/M03/49/F8/wKgDXVWtrdiDf2bOABFbNa2OJx0775.m4a
+   
     {
         MusicData  *data = [[MusicData alloc] init];
-        data.musicURL = @"http://audio.xmcdn.com/group16/M06/6E/3E/wKgDalc7NPfDsjEyAF5JwQWHKB0355.m4a";
-        // data.musicURL = @"http://sc1.111ttt.com/2016/1/08/26/201261124206.mp3";
+//        data.musicURL = @"http://audio.xmcdn.com/group16/M06/6E/3E/wKgDalc7NPfDsjEyAF5JwQWHKB0355.m4a";
+      
+    data.musicURL = @"http://audio.xmcdn.com/group13/M03/49/F8/wKgDXVWtrdiDf2bOABFbNa2OJx0775.m4a";
         data.name = @"聪明先生";
         data.artistName = @"凯叔";
         data.musicPic = @"test.jpg";
         [array addObject:data];
     }
     return array;
+  
 }
 
-
+- (NSMutableArray *)getOtherMusicData{
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:1];
+    {
+        MusicData  *data = [[MusicData alloc] init];
+        //        data.musicURL = @"http://audio.xmcdn.com/group13/M05/6E/84/wKgDXVc7N33ST3ZuAFIFIhmC6ac098.m4a";
+        data.musicURL = @"http://audio.xmcdn.com/group13/M03/49/F8/wKgDXVWtrdiDf2bOABFbNa2OJx0775.m4a";
+        data.musicPic = @"test.jpg";
+        data.artistName = @"凯叔";
+        [array addObject:data];
+    }
+    
+    return array;
+    
+}
 - (NSMutableArray *)getVideoList{
     NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:1];
     

@@ -6,7 +6,7 @@
 //  Copyright © 2016年 he_shao_hu. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+
 #import "HCommon.h"
 #import "BaseVC.h"
 

@@ -164,8 +164,6 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         [dict setObject:@"专辑名" forKey:MPMediaItemPropertyAlbumTitle];
         
         [dict setObject:@(audioDurationSeconds) forKey:MPMediaItemPropertyPlaybackDuration];
-
-        
         CGFloat playerAlbumWidth = (SCREEN_WIDTH - 16) * 2;
         UIImageView *playerAlbum = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, playerAlbumWidth, playerAlbumWidth)];
         UIImage *placeholderImage = [UIImage imageNamed:@"head.jpg"];
@@ -174,7 +172,7 @@ static void *kBufferingRatioKVOKey = &kBufferingRatioKVOKey;
         playerAlbum.contentMode = UIViewContentModeScaleAspectFill;
         
         [dict setObject:artwork forKey:MPMediaItemPropertyArtwork];
-        
+
         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
     }
 }

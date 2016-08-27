@@ -17,19 +17,37 @@
         self.objectIdl = object.objectId;
         
         AVFile *file = [object objectForKey:@"SW_photo"];
-        
         self.SW_photo = file.url?file.url:@"";
         
-        NSString *sw_name = [object objectForKey:@"SW_name"];
+        NSString *sw_name = [object objectForKey:@"S_name"];
+        self.S_name = sw_name;
+    
         
-        self.SW_name = sw_name;
-        
-        NSString *sw_zan = [object objectForKey:@"SW_zan"];
-        
-        self.SW_zan  = sw_zan;
+        NSString *sw_zan = [object objectForKey:@"szan"];
+        self.S_zan  = sw_zan;
+  
     }
 
     return self;
 
 }
+
+//- (instancetype)initWithObject:(AVObject *)object {
+//    if (self = [super init]) {
+//        self.avObject = object;
+//        self.objectIdl = object.objectId;
+//        AVFile *file = [object objectForKey:@"Photos"];
+//        self.Photos = file.url?file.url:@"";
+//        NSString *price = [object  objectForKey:@"GP_Price"];
+//        self.GP_Price =price;
+//        NSString  *sell   = [object  objectForKey:@"GP_Sell"];
+//        self.GP_Sell = sell;
+//        NSString *GPname = [object  objectForKey:@"GP_Name"];
+//        self.GP_Name = GPname;
+//        NSString *address = [object  objectForKey:@"GP_Address"];
+//        self.GP_Address = address;
+//    }
+//    return self;
+//}
+
 @end

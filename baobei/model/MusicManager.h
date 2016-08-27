@@ -19,7 +19,6 @@
 
 
 + (instancetype)shareInstance;
-
 - (void)pauseCurrentMusic;
 - (void)playCurrentMusic;
 - (void)stopCurrentMusic;

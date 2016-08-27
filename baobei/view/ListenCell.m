@@ -12,6 +12,9 @@
 #import "ListenData.h"
 #import "DataManager.h"
 #import "MusicManager.h"
+@interface ListenCell()
+@property (nonatomic,strong)NSURL *URL;
+@end
 @implementation ListenCell
 
 //放大按钮的热区
@@ -279,13 +282,11 @@
     
     
     if( _play.tag == 0&&[_name.text isEqualToString:@"哄睡"]){
-        _play.tag = 1;
-
-
-        
-         [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+        [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
         [[MusicManager shareInstance] playCurrentMusic];
-
+        
+        _play.tag = 1;
+        
     }else if(_play.tag == 0&&[_name.text isEqualToString:@"80后"]){
         
 //        [[MusicManager shareInstance]stopCurrentMusic];
@@ -382,6 +383,8 @@
         
 //        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
         [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+    
+        
         [[MusicManager shareInstance] playCurrentMusic];
 
         
@@ -477,9 +480,12 @@
 - (void)nextPlayMusic{
     if (_play.tag == 1) {
         
-        [[PlayerManager defaultManager]stopPlay];
-        
-        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+//        [[PlayerManager defaultManager]stopPlay];
+//        
+//        [[PlayerManager defaultManager] playingMusic:@"五指歌.mp3"];
+          [[MusicManager shareInstance]stopCurrentMusic];
+           [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+         [[MusicManager shareInstance] playCurrentMusic];
         [_play setImage:[UIImage imageNamed:@"kai1"] forState:UIControlStateNormal];
         [self startAnimation];
         [self runStar];
@@ -490,8 +496,11 @@
 - (void)backPlayMusic{
     if (_play.tag ==1 ) {
         
-        [[PlayerManager defaultManager]stopPlay];
-        [[PlayerManager defaultManager] playingMusic:@"十二属相歌.mp3"];
+//        [[PlayerManager defaultManager]stopPlay];
+//        [[PlayerManager defaultManager] playingMusic:@"十二属相歌.mp3"];
+        [[MusicManager shareInstance]stopCurrentMusic];
+           [[MusicManager shareInstance] setCurrentMusic:[[DataManager shareInstance] getMusicData][1]];
+         [[MusicManager shareInstance] playCurrentMusic];
         [_play setImage:[UIImage imageNamed:@"kai1"] forState:UIControlStateNormal];
         [self startAnimation];
         [self runStar];

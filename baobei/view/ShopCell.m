@@ -58,7 +58,7 @@
     if (!_price) {
         _price = [[UILabel alloc] initWithFrame:CGRectZero];
         
-        _address.font = [UIFont systemFontOfSize:15];
+        _price.font = [UIFont systemFontOfSize:15];
     }
     return _price;
 }

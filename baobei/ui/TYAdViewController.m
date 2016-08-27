@@ -12,8 +12,9 @@
 #import "HTabBarController.h"
 #import "HNavigationController.h"
 #import "HWebView.h"
-#import <UIKit/UIKit.h>
+
 #import "HCameraVC.h"
+
 @interface TYAdViewController ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic,strong)NSString *ADURL;
@@ -138,18 +139,27 @@
                                   self.window = [UIApplication sharedApplication].keyWindow;
                                   HTabBarController *tab = [[HTabBarController alloc] init];
                                   HNavigationController *nv = [[HNavigationController alloc] initWithRootViewController:tab];
-                                  [UIView animateWithDuration:0.5 animations:^{
-                                      _Imageview.alpha = 0.3;
-                                  } completion:^(BOOL finished) {
-                                      [UIView animateWithDuration:0.5
-                                                       animations:^(void) {
-                                                        self.window.rootViewController = nv;}
-                                       ];
-                                  }];
-
+//                                  [UIView animateWithDuration:0.5 animations:^{
+//                                      _Imageview.alpha = 0.3;
+//                                  } completion:^(BOOL finished) {
+//                                      [UIView animateWithDuration:0.5
+//                                                       animations:^(void) {
+//                                                        self.window.rootViewController = nv;}
+//                                       ];
+//                                  }];
+    [UIView animateWithDuration:0.5f animations:^{
+        self.view.transform = (CGAffineTransformMakeScale(2.0, 1.0));
+        self.view.backgroundColor = [UIColor clearColor];
+        self.view.alpha = 0.0; //让scrollview 渐变消失
+    }completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.01
+                                                                animations:^(void) {
+                                                                 self.window.rootViewController = nv;}
+                                                ];
+    } ];
 //                  });
     
-     
+    
         
             
             

@@ -9,49 +9,58 @@
 #import "ShowCell.h"
 #import "ShowPhotoModel.h"
 @interface ShowCell()
-
-//@property (nonatomic, strong) UILabel *userName;
 @property (nonatomic, strong) UIImageView *likeImageView;
-
-
 
 @end
 
 @implementation ShowCell
 
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-        [self.contentView addSubview:self.imageView];
-        [self.contentView addSubview:self.likeImageView];
-        [self.contentView addSubview:self.userName];
-        [self.contentView addSubview:self.zan];
+        [self setupUI];
     }
     return self;
 }
 
+//- (instancetype)initWithFrame:(CGRect)frame
+//{
+//    self = [super initWithFrame:frame];
+//    if (self) {
+//        self.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+//        [self.contentView addSubview:self.imageView];
+//        [self.contentView addSubview:self.likeImageView];
+//        [self.contentView addSubview:self.userName];
+//        [self.contentView addSubview:self.zan];
+//    }
+//    return self;
+//}
+
+-(void)setupUI{
+            self.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+            [self.contentView addSubview:self.imageView];
+            [self.contentView addSubview:self.likeImageView];
+            [self.contentView addSubview:self.userName];
+            [self.contentView addSubview:self.zan];
+}
 - (void)setShowPhotoMode:(ShowPhotoModel *)showPhotoMode{
     
-        _showPhotoMode = showPhotoMode;
+    _showPhotoMode = showPhotoMode;
     
-        self.userName.text = showPhotoMode.SW_name;
-    
-        self.zan.text = showPhotoMode.SW_zan;
-    
-    // 图片赋值
+    self.userName.text = showPhotoMode.S_name;
+        self.zan.text               = showPhotoMode.S_zan;
         [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",showPhotoMode.SW_photo]] placeholderImage:[UIImage imageNamed:@"01"]];
-    
-        //self.imageView.image = [UIImage imageNamed:@"head.jpg"];
+
 }
 
 - (UILabel *)zan{
 
     if (!_zan) {
         _zan = [[UILabel alloc]initWithFrame:CGRectZero];
-    }return _zan;
+        _zan.font = [UIFont systemFontOfSize:15];
+    }
+    return _zan;
 
 }
 - (UIImageView *)imageView{
@@ -71,15 +80,13 @@
 - (UILabel *)userName{
     if (!_userName) {
         _userName = [[UILabel alloc] initWithFrame:CGRectZero];
+               _userName.font = [UIFont systemFontOfSize:15];
     }
     return _userName;
 }
 
 - (void)layoutSubviews{
     [super layoutSubviews];
-    
-    //self.userName.text = @"壮壮";
-    [self.userName sizeToFit];
     
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.contentView.mas_width).offset(-10);
@@ -90,7 +97,7 @@
     [self.userName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView.mas_left).offset(10);
         make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
-
+        make.size.mas_equalTo(CGSizeMake(60, 20));
     }];
     [self.likeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(20, 20));
@@ -99,9 +106,10 @@
     }];
     
     [self.zan mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(40, 20));
+
         make.right.equalTo(self.contentView.mas_right).offset(-1);
         make.bottom.equalTo(self.contentView.mas_bottom).offset(-2);
+        make.size.mas_equalTo(CGSizeMake(40, 20));
     }];
 }
 

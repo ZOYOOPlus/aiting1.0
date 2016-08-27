@@ -275,7 +275,6 @@ static void * kContentOffSet = &kContentOffSet;
 
 - (void)initadsView{
     RowAdsView *adsView = [[RowAdsView alloc] initWithPostionY:kBannerHeight];
-
     adsView.adsArray = [[DataManager shareInstance] getAdsArray];
     adsView.adsDelegate = self;
     [self.collectionView addSubview:adsView];

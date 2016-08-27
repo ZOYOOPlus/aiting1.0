@@ -26,9 +26,13 @@
 - (NSMutableArray *)getActivityData;
 - (NSArray *)getActivityTitleData;
 - (NSMutableArray *)getProfileConfigArray;
-- (NSMutableArray *)getMusicData;
+
 - (NSMutableArray *)getShopAdsArray;
 - (NSMutableArray *)getListenList;
 - (NSMutableArray *)getVideoList;
+
+- (NSMutableArray *)getMusicData;
+
+- (NSMutableArray *)getOtherMusicData;
 
 @end

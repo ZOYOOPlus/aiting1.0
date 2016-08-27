@@ -10,13 +10,13 @@
 #import <AVOSCloud/AVOSCloud.h>
 
 @interface ShowPhotoModel : NSObject
+
 @property (nonatomic, strong) AVObject *avObject;
 @property (nonatomic, strong) NSString *objectIdl;
 
 @property  (nonatomic, strong) NSString *SW_photo;
-@property  (nonatomic,strong) NSString  *SW_name;
-@property  (nonatomic,strong) NSString  *SW_zan;
-
+@property  (nonatomic,strong) NSString  *S_name;
+@property  (nonatomic,strong) NSString  *S_zan;
 
 - (instancetype)initWithObject:(AVObject *)object;
 
